@@ -28,6 +28,13 @@ _OFFLINE = [
         ["sre", "kubernetes", "python"],
         "https://weworkremotely.com/remote-jobs/demo-sre",
     ),
+    (
+        "QA Automation Engineer",
+        "ShipSure",
+        "Remote",
+        ["qa", "pytest", "selenium"],
+        "https://weworkremotely.com/remote-jobs/demo-qa-automation",
+    ),
 ]
 
 
