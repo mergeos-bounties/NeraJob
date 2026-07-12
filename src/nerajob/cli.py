@@ -26,6 +26,34 @@ app.add_typer(jobs_app, name="jobs")
 console = Console()
 
 
+def _dedupe_jobs(jobs: list[JobPosting]) -> tuple[list[JobPosting], int, int]:
+    """
+    Deduplicate jobs.
+
+    Strategy:
+      1. URL exact match (preferred)
+      2. title.lower() + company.lower()
+
+    Returns (unique_jobs, total_fetched, duplicate_count).
+    """
+    seen: set[str] = set()
+    unique: list[JobPosting] = []
+    dupes = 0
+
+    for job in jobs:
+        url_key = job.url.strip().lower()
+        title_key = (job.title.lower() + "|" + job.company.lower())
+        key = url_key if url_key else title_key
+
+        if key not in seen:
+            seen.add(key)
+            unique.append(job)
+        else:
+            dupes += 1
+
+    return unique, len(jobs), dupes
+
+
 @app.callback()
 def main() -> None:
     """NeraJob CLI."""
@@ -86,6 +114,14 @@ def scan_cmd(
     if not collected and source != "sample" and not all_sources:
         console.print("[yellow]No hits from live source; falling back to sample feed.[/yellow]")
         collected = get_scraper("sample").search(query=query, location=location, limit=limit)
+
+    # Deduplicate when aggregating multiple sources
+    if all_sources and len(names) > 1:
+        collected, fetched, dupes = _dedupe_jobs(collected)
+        console.print(
+            f"[dim]Dedupe: {fetched} fetched → {len(collected)} unique "
+            f"({dupes} duplicates removed)[/dim]"
+        )
 
     merged = upsert_jobs(collected)
     table = Table(title=f"Jobs saved ({len(collected)} new/updated, {len(merged)} total)")
