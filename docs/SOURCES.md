@@ -24,6 +24,9 @@ Canonical list of **implemented** and **planned** job boards / ATS feeds for Ner
 | --- | --- | --- | --- | --- | --- |
 | `sample` | Offline demo feed | Global (fixture) | None (offline) | `scrapers/sample.py` | Deterministic roles for demos, tests, CI. **No network.** |
 | `remoteok` | [RemoteOK](https://remoteok.com) | Remote / worldwide | Public JSON `https://remoteok.com/api` | `scrapers/remoteok.py` | Thin live adapter. Filters client-side by query tags/title. On network failure returns `[]` (CLI may fall back to `sample`). |
+| `remotive` | [Remotive](https://remotive.com) | Remote / worldwide | Public JSON `https://remotive.com/api/remote-jobs` | `scrapers/remotive.py` | Remote-only board (all jobs `remote=True`). Client-side filter. |
+| `arbeitnow` | [Arbeitnow](https://www.arbeitnow.com) | EU / remote-friendly | Public JSON `https://www.arbeitnow.com/api/job-board-api` | `scrapers/arbeitnow.py` | EU-focused job board. Client-side filter + pagination. ToS: free for personal/non-commercial. |
+| `himalayas` | [Himalayas](https://himalayas.app) | Remote-first / worldwide | Public JSON `https://himalayas.app/jobs/api` | `scrapers/himalayas.py` | Salary metadata, location restrictions, seniority tags. Client-side filter. |
 | `lever` | [Lever](https://www.lever.co) | Per-company career board | Public JSON `https://api.lever.co/v0/postings/<board>?mode=json` | `scrapers/lever.py` | Set `NERAJOB_LEVER_BOARD` for live. No env → offline sample posting (tests/demos). |
 | `ashby` | [Ashby](https://www.ashbyhq.com) | Per-company career board | Public JSON `https://api.ashbyhq.com/posting-api/job-board/<board_id>` | `scrapers/ashby.py` | Set `NERAJOB_ASHBY_BOARD` for live. No env → offline sample posting (tests/demos). |
 
@@ -33,8 +36,11 @@ Canonical list of **implemented** and **planned** job boards / ATS feeds for Ner
 # Offline demo
 nerajob scan --source sample -q python -n 10
 
-# Live RemoteOK
+# Live job boards
 nerajob scan --source remoteok -q "python backend" -n 20
+nerajob scan --source remotive -q python -n 20
+nerajob scan --source arbeitnow -q python -n 20
+nerajob scan --source himalayas -q python -n 20
 
 # Lever / Ashby company boards
 # export NERAJOB_LEVER_BOARD=netflix   # Windows: set NERAJOB_LEVER_BOARD=netflix
@@ -64,10 +70,7 @@ Linked to open issues on [mergeos-bounties/NeraJob](https://github.com/mergeos-b
 
 | Planned `--source` | Site | Access (typical) | Bounty issue | Priority notes |
 | --- | --- | --- | --- | --- |
-| `remotive` | [Remotive](https://remotive.com) | Public jobs API | [#2](https://github.com/mergeos-bounties/NeraJob/issues/2) | Good first remote pack |
-| `arbeitnow` | [Arbeitnow](https://www.arbeitnow.com) | Public API job feed | [#3](https://github.com/mergeos-bounties/NeraJob/issues/3) | EU-friendly remote |
 | `jobicy` | [Jobicy](https://jobicy.com) | Remote jobs API | [#4](https://github.com/mergeos-bounties/NeraJob/issues/4) | Remote focus |
-| `himalayas` | [Himalayas](https://himalayas.app) | Public remote jobs API | [#5](https://github.com/mergeos-bounties/NeraJob/issues/5) | Remote + salary metadata |
 | `findwork` | [Findwork.dev](https://findwork.dev) | API + optional key | [#6](https://github.com/mergeos-bounties/NeraJob/issues/6) | Dev jobs |
 
 ### Aggregators & national / multi-country APIs
@@ -143,9 +146,12 @@ When an adapter needs a missing key: log a clear CLI message and return `[]` (do
 | --- | --- | --- |
 | Đã có | `sample` | Demo offline, không cần mạng |
 | Đã có | `remoteok` | API JSON public RemoteOK |
+| Đã có | `remotive` | API JSON public Remotive, remote-only |
+| Đã có | `arbeitnow` | API JSON public Arbeitnow, EU remote jobs |
+| Đã có | `himalayas` | API JSON public Himalayas, salary metadata |
 | Đã có | `lever` | Board công ty Lever; env `NERAJOB_LEVER_BOARD` |
 | Đã có | `ashby` | Board công ty Ashby; env `NERAJOB_ASHBY_BOARD` |
-| Sắp tới | Remotive, Arbeitnow, Jobicy, Himalayas, Findwork, Adzuna, USAJOBS, Reed, The Muse, Greenhouse, SmartRecruiters, Jooble, board VN (TopCV/VNW ToS-safe) | Xem issue bounty tương ứng |
+| Sắp tới | Jobicy, Findwork, Adzuna, USAJOBS, Reed, The Muse, Greenhouse, SmartRecruiters, Jooble, board VN (TopCV/VNW ToS-safe) | Xem issue bounty tương ứng |
 
 Luôn tôn trọng điều khoản site, rate limit, và không commit secret.
 

@@ -70,6 +70,9 @@ Full catalog (API links, env vars, bounty issues): **[docs/SOURCES.md](docs/SOUR
 | --- | --- | --- | --- | --- |
 | `sample` | Built-in demo feed | Offline fixtures | No | None |
 | `remoteok` | [RemoteOK](https://remoteok.com) | Public JSON API (`/api`) | Yes | None (polite User-Agent) |
+| `remotive` | [Remotive](https://remotive.com) | Public JSON API (`/api/remote-jobs`) | Yes | None. Remote-only board — all jobs are `remote=True`. |
+| `arbeitnow` | [Arbeitnow](https://www.arbeitnow.com) | Public JSON API (`/api/job-board-api`) | Yes | None. Conservative pagination; ToS: free for personal/non-commercial. |
+| `himalayas` | [Himalayas](https://himalayas.app) | Public JSON API (`/jobs/api`) | Yes | None. Salary metadata, location restrictions. |
 | `lever` | [Lever](https://www.lever.co) public postings | Per-company JSON board | Optional | `NERAJOB_LEVER_BOARD` (company slug). Without it: offline sample postings |
 | `ashby` | [Ashby](https://www.ashbyhq.com) public job board | Per-company JSON board | Optional | `NERAJOB_ASHBY_BOARD` (board id). Without it: offline sample postings |
 
@@ -79,6 +82,9 @@ nerajob scan --source sample -q python -n 10
 
 # Live remote listings (global feed)
 nerajob scan --source remoteok -q "python backend" -n 20
+nerajob scan --source remotive -q python -n 20
+nerajob scan --source arbeitnow -q python -n 20
+nerajob scan --source himalayas -q python -n 20
 
 # Lever / Ashby — set board env for live company boards
 set NERAJOB_LEVER_BOARD=netflix
@@ -95,22 +101,15 @@ nerajob scan --all -q python -l remote -n 15
 | --- | --- |
 | **sample** | Deterministic roles (Python backend, full-stack, platform, ML, automation) for demos and tests. No HTTP. |
 | **remoteok** | Live adapter for RemoteOK’s public feed. Client-side keyword filter on title, company, tags, description. On API/network failure returns empty; single-source scan may fall back to `sample`. |
+| **remotive** | Live adapter for Remotive’s public API (`https://remotive.com/api/remote-jobs`). All jobs are `remote=True`. Client-side keyword filter. |
+| **arbeitnow** | Live adapter for Arbeitnow’s public API (`https://www.arbeitnow.com/api/job-board-api`). EU-focused listings. Client-side keyword filter. |
+| **himalayas** | Live adapter for Himalayas.app API (`https://himalayas.app/jobs/api`). Salary metadata, location restrictions. Client-side keyword filter. |
 | **lever** | [Lever Postings API](https://github.com/lever/postings-api): `https://api.lever.co/v0/postings/<board>?mode=json`. Board slug via `NERAJOB_LEVER_BOARD`. Missing board → built-in sample row for demos/tests. |
 | **ashby** | Ashby public board: `https://api.ashbyhq.com/posting-api/job-board/<board_id>`. Board id via `NERAJOB_ASHBY_BOARD`. Missing board → built-in sample row for demos/tests. |
 
 ### Planned (roadmap + open bounties)
 
 Adapters below are **not** in the registry yet. Contribute via open issues labeled `scraper` / `api`.
-
-#### Remote & global public feeds
-
-| Planned source | Site | Typical access | Issue |
-| --- | --- | --- | --- |
-| `remotive` | [Remotive](https://remotive.com) | Public jobs API | [#2](https://github.com/mergeos-bounties/NeraJob/issues/2) |
-| `arbeitnow` | [Arbeitnow](https://www.arbeitnow.com) | Public API feed | [#3](https://github.com/mergeos-bounties/NeraJob/issues/3) |
-| `jobicy` | [Jobicy](https://jobicy.com) | Remote jobs API | [#4](https://github.com/mergeos-bounties/NeraJob/issues/4) |
-| `himalayas` | [Himalayas](https://himalayas.app) | Public remote API | [#5](https://github.com/mergeos-bounties/NeraJob/issues/5) |
-| `findwork` | [Findwork.dev](https://findwork.dev) | API (± key) | [#6](https://github.com/mergeos-bounties/NeraJob/issues/6) |
 
 #### Aggregators & national APIs
 
