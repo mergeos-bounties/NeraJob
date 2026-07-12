@@ -95,6 +95,20 @@ def scan_cmd(
         console.print("[yellow]No hits from live source; falling back to sample feed.[/yellow]")
         collected = get_scraper("sample").search(query=query, location=location, limit=limit)
 
+    # Dedupe across sources (scan --all): prefer first occurrence, keep stable order
+    before = len(collected)
+    seen_keys: set[str] = set()
+    deduped: list[JobPosting] = []
+    for job in collected:
+        key = f"{job.title.strip().lower()}|{job.company.strip().lower()}|{job.url.strip().lower()}"
+        if key in seen_keys:
+            continue
+        seen_keys.add(key)
+        deduped.append(job)
+    collected = deduped
+    if all_sources and before != len(collected):
+        console.print(f"[dim]Deduped[/dim] {before} → {len(collected)} unique jobs")
+
     merged = upsert_jobs(collected)
     table = Table(title=f"Jobs saved ({len(collected)} new/updated, {len(merged)} total)")
     table.add_column("ID", style="dim")
