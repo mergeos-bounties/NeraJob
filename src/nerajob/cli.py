@@ -170,6 +170,23 @@ def apply_cmd(
     console.print(f"Cover note preview:\n\n{package.cover_note[:500]}…")
 
 
+@jobs_app.command("export")
+def jobs_export(
+    out: Path = typer.Option(Path("data/out/jobs.csv"), "--out", "-o"),
+    limit: int = typer.Option(500, "--limit", "-n", min=1, max=5000),
+) -> None:
+    """Export saved jobs to CSV."""
+    from nerajob.export_jobs import jobs_to_csv
+    from nerajob.storage import load_jobs
+
+    jobs = load_jobs()[:limit]
+    if not jobs:
+        console.print("[yellow]No jobs. Run: nerajob scan -q python[/yellow]")
+        raise typer.Exit()
+    path = jobs_to_csv(jobs, out)
+    console.print(f"[green]CSV[/green] {path} rows={len(jobs)}")
+
+
 @jobs_app.command("match")
 def jobs_match(
     top: int = typer.Option(10, "--top", "-k", min=1, max=50),
