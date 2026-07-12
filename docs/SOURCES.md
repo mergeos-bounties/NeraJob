@@ -151,6 +151,10 @@ Luôn tôn trọng điều khoản site, rate limit, và không commit secret.
 
 ---
 
+*Catalog maintained in sync with `src/nerajob/scrapers/registry.py`. Issue #23 (MRG bounty) — see [BOUNTY.md](BOUNTY.md).*
+
+
+
 ## Related docs
 
 - [README.md](../README.md) — product overview + quick start  
