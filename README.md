@@ -99,9 +99,21 @@ pytest -q
 ruff check src tests
 ```
 
+## MergeOS bounties (claim MRG)
+
+NeraJob issues labeled `bounty` pay **MRG** via MergeOS after merge.
+
+1. Read [docs/BOUNTY.md](docs/BOUNTY.md)
+2. Pick an open issue with `reward:*-mrg`
+3. Claim on the issue + on MergeOS [Claim Token #1](https://github.com/mergeos-bounties/mergeos/issues/1)
+4. Open a PR to this repo (`Fixes #N`)
+5. Maintainer merges and credits `github:<you>` on the MergeOS ledger (25/50/100/200 scale)
+
+High-demand work: **job board scrapers** (see open issues tagged `scraper`).
+
 ## MergeOS
 
-NeraJob is maintained alongside MergeOS bounty workflows. Product issues and bounty tasks for NeraJob should link this repository. Parent OS: [mergeos-bounties/mergeos](https://github.com/mergeos-bounties/mergeos).
+NeraJob is a sister project under [mergeos-bounties](https://github.com/mergeos-bounties). Parent OS: [mergeos-bounties/mergeos](https://github.com/mergeos-bounties/mergeos).
 
 ## License
 
