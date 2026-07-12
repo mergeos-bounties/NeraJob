@@ -14,6 +14,23 @@ Product source of truth: [mergeos-bounties/NeraJob](https://github.com/mergeos-b
 
 ---
 
+
+## Screenshots
+
+Real captures from running the product demo (NeraJob).
+
+![Scan sample jobs](docs/screenshots/demo-scan-sample.png)
+
+*Scan sample jobs*
+
+![Registered scrapers](docs/screenshots/demo-sources.png)
+
+*Registered scrapers*
+
+![Jobs cache after scan](docs/screenshots/demo-jobs-cache.png)
+
+*Jobs cache after scan*
+
 ## Table of contents
 
 - [Features](#features)
