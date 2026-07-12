@@ -26,6 +26,13 @@ _OFFLINE = [
         ["kubernetes", "terraform", "aws"],
         "https://www.arbeitnow.com/view/demo-devops",
     ),
+    (
+        "Security Engineer",
+        "Shield EU",
+        "Remote",
+        ["security", "python", "appsec"],
+        "https://www.arbeitnow.com/view/demo-security",
+    ),
 ]
 
 
