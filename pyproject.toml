@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nerajob"
-version = "0.1.0"
+version = "0.2.0"
 description = "Global job scanner, CV builder, and apply assistant"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -26,9 +26,13 @@ dev = [
   "pytest>=8.0",
   "ruff>=0.4",
 ]
+gui = [
+  "PySide6>=6.6",
+]
 
 [project.scripts]
 nerajob = "nerajob.cli:app"
+nerajob-gui = "nerajob.gui.app:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

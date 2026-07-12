@@ -36,6 +36,14 @@ def version_cmd() -> None:
     console.print(f"NeraJob {__version__}")
 
 
+@app.command("gui")
+def gui_cmd() -> None:
+    """Launch the modern Qt desktop app (requires: pip install -e '.[gui]')."""
+    from nerajob.gui.app import main as gui_main
+
+    raise SystemExit(gui_main())
+
+
 @profile_app.command("init")
 def profile_init(force: bool = typer.Option(False, help="Overwrite existing profile")) -> None:
     existing = load_profile()

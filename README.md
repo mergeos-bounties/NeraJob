@@ -31,6 +31,48 @@ Real captures from running the product demo (NeraJob).
 
 *Jobs cache after scan*
 
+
+## Desktop GUI (Qt)
+
+Modern **PySide6** desktop app — scan jobs, browse cache, edit profile, build CV, prepare apply packages.
+
+```powershell
+pip install -e ".[gui]"
+nerajob-gui
+# or: nerajob gui
+```
+
+<p align="center">
+  <img src="docs/screenshots/gui-scan.png" alt="NeraJob GUI — Scan" width="100%" />
+</p>
+
+*Scan jobs*
+
+<p align="center">
+  <img src="docs/screenshots/gui-jobs.png" alt="NeraJob GUI — Job board" width="100%" />
+</p>
+
+*Job board (local cache)*
+
+<p align="center">
+  <img src="docs/screenshots/gui-profile.png" alt="NeraJob GUI — Profile" width="100%" />
+</p>
+
+*Profile editor*
+
+<p align="center">
+  <img src="docs/screenshots/gui-cv.png" alt="NeraJob GUI — CV" width="100%" />
+</p>
+
+*Build CV*
+
+<p align="center">
+  <img src="docs/screenshots/gui-apply.png" alt="NeraJob GUI — Apply" width="100%" />
+</p>
+
+*Apply package*
+
+
 ## Table of contents
 
 - [Features](#features)
