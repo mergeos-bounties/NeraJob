@@ -38,6 +38,7 @@ Real captures from running the product demo (NeraJob).
 - [Stack](#stack)
 - [Quick start](#quick-start)
 - [Common commands](#common-commands)
+- [Diagrams](#diagrams)
 - [Architecture](#architecture)
 - [Data layout](#data-layout)
 - [Adding a job site](#adding-a-job-site)
@@ -204,6 +205,18 @@ nerajob jobs list
 ```
 
 ---
+
+
+## Diagrams
+
+Interactive Archify diagrams (dark/light theme, export PNG/SVG in the HTML viewer):
+
+| Diagram | Interactive | README embed |
+| --- | --- | --- |
+| **Architecture** | [docs/diagrams/architecture.html](docs/diagrams/architecture.html) | ![Architecture](docs/diagrams/architecture.svg) |
+| **Workflow** | [docs/diagrams/workflow.html](docs/diagrams/workflow.html) | ![Workflow](docs/diagrams/workflow.svg) |
+
+*Generated with [archify](https://github.com/tt-a1i) — open the `.html` files for theme toggle and export.*
 
 ## Architecture
 
