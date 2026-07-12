@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from nerajob.config import APPLICATIONS_DIR, data_dir
+from nerajob.config import APPLICATIONS_DIR
 from nerajob.cv.builder import write_cv_files
 from nerajob.models import ApplicationPackage, JobPosting, Profile
 from nerajob.storage import save_application
