@@ -70,6 +70,7 @@ Full catalog (API links, env vars, bounty issues): **[docs/SOURCES.md](docs/SOUR
 | --- | --- | --- | --- | --- |
 | `sample` | Built-in demo feed | Offline fixtures | No | None |
 | `remoteok` | [RemoteOK](https://remoteok.com) | Public JSON API (`/api`) | Yes | None (polite User-Agent) |
+| `arbeitnow` | [Arbeitnow](https://www.arbeitnow.com) | Public JSON API (`/api/job-board-api`) | Yes | None. Conservative pagination to respect rate limits. ToS: free for personal/non-commercial use. |
 | `lever` | [Lever](https://www.lever.co) public postings | Per-company JSON board | Optional | `NERAJOB_LEVER_BOARD` (company slug). Without it: offline sample postings |
 | `ashby` | [Ashby](https://www.ashbyhq.com) public job board | Per-company JSON board | Optional | `NERAJOB_ASHBY_BOARD` (board id). Without it: offline sample postings |
 

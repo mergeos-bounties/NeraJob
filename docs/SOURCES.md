@@ -24,6 +24,7 @@ Canonical list of **implemented** and **planned** job boards / ATS feeds for Ner
 | --- | --- | --- | --- | --- | --- |
 | `sample` | Offline demo feed | Global (fixture) | None (offline) | `scrapers/sample.py` | Deterministic roles for demos, tests, CI. **No network.** |
 | `remoteok` | [RemoteOK](https://remoteok.com) | Remote / worldwide | Public JSON `https://remoteok.com/api` | `scrapers/remoteok.py` | Thin live adapter. Filters client-side by query tags/title. On network failure returns `[]` (CLI may fall back to `sample`). |
+| `arbeitnow` | [Arbeitnow](https://www.arbeitnow.com) | EU / remote-friendly | Public JSON `https://www.arbeitnow.com/api/job-board-api` | `scrapers/arbeitnow.py` | EU-focused job board. Query param + pagination supported. Conservative rate-limit respect. ToS: free for personal/non-commercial use. |
 | `lever` | [Lever](https://www.lever.co) | Per-company career board | Public JSON `https://api.lever.co/v0/postings/<board>?mode=json` | `scrapers/lever.py` | Set `NERAJOB_LEVER_BOARD` for live. No env → offline sample posting (tests/demos). |
 | `ashby` | [Ashby](https://www.ashbyhq.com) | Per-company career board | Public JSON `https://api.ashbyhq.com/posting-api/job-board/<board_id>` | `scrapers/ashby.py` | Set `NERAJOB_ASHBY_BOARD` for live. No env → offline sample posting (tests/demos). |
 
