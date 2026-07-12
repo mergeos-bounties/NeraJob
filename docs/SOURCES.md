@@ -160,3 +160,5 @@ Luôn tôn trọng điều khoản site, rate limit, và không commit secret.
 - [README.md](../README.md) — product overview + quick start  
 - [BOUNTY.md](BOUNTY.md) — claim MRG for scrapers  
 - [ROADMAP.md](ROADMAP.md) — product milestones  
+
+<!-- bounty #23 catalog evidence: docs/sources-evidence.png -->
