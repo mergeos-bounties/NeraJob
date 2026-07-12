@@ -22,10 +22,12 @@ Canonical list of **implemented** and **planned** job boards / ATS feeds for Ner
 
 | CLI `--source` | Site | Region / focus | Access | Module | Notes |
 | --- | --- | --- | --- | --- | --- |
-| `sample` | Offline demo feed | Global (fixture) | None (offline) | `scrapers/sample.py` | Deterministic roles for demos, tests, CI. **No network.** |
-| `remoteok` | [RemoteOK](https://remoteok.com) | Remote / worldwide | Public JSON `https://remoteok.com/api` | `scrapers/remoteok.py` | Thin live adapter. Filters client-side by query tags/title. On network failure returns `[]` (CLI may fall back to `sample`). |
-| `lever` | [Lever](https://www.lever.co) | Per-company career board | Public JSON `https://api.lever.co/v0/postings/<board>?mode=json` | `scrapers/lever.py` | Set `NERAJOB_LEVER_BOARD` for live. No env → offline sample posting (tests/demos). |
-| `ashby` | [Ashby](https://www.ashbyhq.com) | Per-company career board | Public JSON `https://api.ashbyhq.com/posting-api/job-board/<board_id>` | `scrapers/ashby.py` | Set `NERAJOB_ASHBY_BOARD` for live. No env → offline sample posting (tests/demos). |
+|| `sample` | Offline demo feed | Global (fixture) | None (offline) | `scrapers/sample.py` | Deterministic roles for demos, tests, CI. **No network.** |
+|| `remoteok` | [RemoteOK](https://remoteok.com) | Remote / worldwide | Public JSON `https://remoteok.com/api` | `scrapers/remoteok.py` | Thin live adapter. Filters client-side by query tags/title. On network failure returns `[]` (CLI may fall back to `sample`). |
+|| `remotive` | [Remotive](https://remotive.com) | Remote / worldwide | Public API `https://remotive.com/api/remote-jobs` | `scrapers/remotive.py` | Live public API. Set `NERAJOB_REMOTIVE_OFFLINE=1` for offline samples. |
+|| `arbeitnow` | [Arbeitnow](https://www.arbeitnow.com) | Remote / EU-focused | Public API `https://www.arbeitnow.com/api/job-board/feeds` | `scrapers/arbeitnow.py` | Live public API. Set `NERAJOB_ARBEITNOW_OFFLINE=1` for offline samples. |
+|| `lever` | [Lever](https://www.lever.co) | Per-company career board | Public JSON `https://api.lever.co/v0/postings/<board>?mode=json` | `scrapers/lever.py` | Set `NERAJOB_LEVER_BOARD` for live. No env → offline sample posting (tests/demos). |
+|| `ashby` | [Ashby](https://www.ashbyhq.com) | Per-company career board | Public JSON `https://api.ashbyhq.com/posting-api/job-board/<board_id>` | `scrapers/ashby.py` | Set `NERAJOB_ASHBY_BOARD` for live. No env → offline sample posting (tests/demos). |
 
 ### CLI examples
 
@@ -64,9 +66,7 @@ Linked to open issues on [mergeos-bounties/NeraJob](https://github.com/mergeos-b
 
 | Planned `--source` | Site | Access (typical) | Bounty issue | Priority notes |
 | --- | --- | --- | --- | --- |
-| `remotive` | [Remotive](https://remotive.com) | Public jobs API | [#2](https://github.com/mergeos-bounties/NeraJob/issues/2) | Good first remote pack |
-| `arbeitnow` | [Arbeitnow](https://www.arbeitnow.com) | Public API job feed | [#3](https://github.com/mergeos-bounties/NeraJob/issues/3) | EU-friendly remote |
-| `jobicy` | [Jobicy](https://jobicy.com) | Remote jobs API | [#4](https://github.com/mergeos-bounties/NeraJob/issues/4) | Remote focus |
+|| `jobicy` | [Jobicy](https://jobicy.com) | Remote jobs API | [#4](https://github.com/mergeos-bounties/NeraJob/issues/4) | Remote focus |
 | `himalayas` | [Himalayas](https://himalayas.app) | Public remote jobs API | [#5](https://github.com/mergeos-bounties/NeraJob/issues/5) | Remote + salary metadata |
 | `findwork` | [Findwork.dev](https://findwork.dev) | API + optional key | [#6](https://github.com/mergeos-bounties/NeraJob/issues/6) | Dev jobs |
 
@@ -88,7 +88,7 @@ Linked to open issues on [mergeos-bounties/NeraJob](https://github.com/mergeos-b
 | `greenhouse` | [Greenhouse](https://developers.greenhouse.io/job-board.html) | Public board JSON (`boards.greenhouse.io`) | [#11](https://github.com/mergeos-bounties/NeraJob/issues/11) | Per-company board token list |
 | `smartrecruiters` | [SmartRecruiters](https://developers.smartrecruiters.com) | Public postings | [#14](https://github.com/mergeos-bounties/NeraJob/issues/14) | Company-scoped boards |
 
-> **Shipped ATS:** `lever` (#12 / #25), `ashby` (#13 / #24) — see implemented table above.
+> **Shipped:** `remoteok` (#19), `remotive` (#2), `arbeitnow` (#3), `lever` (#12 / #25), `ashby` (#13 / #24) — see implemented table above.
 
 ### Vietnam / regional (ToS-safe only)
 
