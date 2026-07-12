@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 
 from PySide6.QtCore import Qt, QSize
-from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import (
     QComboBox,
     QFormLayout,
