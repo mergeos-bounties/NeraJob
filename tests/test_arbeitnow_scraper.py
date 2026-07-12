@@ -1,5 +1,4 @@
 """Tests for the Arbeitnow scraper."""
-import pytest
 from unittest.mock import patch, MagicMock
 import httpx
 

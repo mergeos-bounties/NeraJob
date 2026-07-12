@@ -1,5 +1,4 @@
 """Tests for the CLI dedupe logic."""
-import pytest
 from datetime import datetime, timezone
 from nerajob.cli import _dedupe_jobs
 from nerajob.models import JobPosting
