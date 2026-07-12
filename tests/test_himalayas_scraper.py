@@ -1,5 +1,4 @@
 """Tests for the Himalayas scraper."""
-import pytest
 from unittest.mock import patch, MagicMock
 import httpx
 
