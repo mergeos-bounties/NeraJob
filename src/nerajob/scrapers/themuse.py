@@ -26,6 +26,13 @@ _OFFLINE = [
         ["sql", "python", "analytics"],
         "https://www.themuse.com/jobs/demo-data-analyst",
     ),
+    (
+        "Platform SRE",
+        "Harbor Cloud",
+        "Remote",
+        ["sre", "kubernetes", "python"],
+        "https://www.themuse.com/jobs/demo-platform-sre",
+    ),
 ]
 
 
