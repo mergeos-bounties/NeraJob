@@ -4,16 +4,37 @@ from __future__ import annotations
 
 from nerajob.models import JobPosting, Profile
 
+# Common skill aliases for resume ↔ job matching (offline-friendly).
+SKILL_ALIASES: dict[str, set[str]] = {
+    "python": {"python", "django", "fastapi", "flask"},
+    "javascript": {"javascript", "js", "typescript", "node", "react"},
+    "devops": {"devops", "docker", "kubernetes", "k8s", "ci/cd"},
+    "ml": {"ml", "machine learning", "pytorch", "tensorflow"},
+}
+
+
+def expand_skills(skills: set[str] | list[str] | tuple[str, ...]) -> set[str]:
+    out = {str(s).lower().strip() for s in skills if str(s).strip()}
+    for s in list(out):
+        for key, aliases in SKILL_ALIASES.items():
+            if s == key or s in aliases:
+                out |= aliases | {key}
+    return out
+
 
 def match_score(profile: Profile, job: JobPosting) -> dict:
     """
     Lightweight keyword match: skills vs title/description/tags + location soft score.
     Returns 0–100 score with explainable hits.
     """
-    skills = [s.strip().lower() for s in (profile.skills or []) if s.strip()]
+    base_skills = [s.strip().lower() for s in (profile.skills or []) if s.strip()]
     hay = f"{job.title} {job.description} {' '.join(job.tags)} {job.company}".lower()
-    hits = [s for s in skills if s and s in hay]
-    skill_score = (len(hits) / max(1, len(skills))) * 70.0 if skills else 35.0
+    hits: list[str] = []
+    for s in base_skills:
+        aliases = expand_skills({s})
+        if any(a and a in hay for a in aliases):
+            hits.append(s)
+    skill_score = (len(hits) / max(1, len(base_skills))) * 70.0 if base_skills else 35.0
 
     # headline / target role token overlap with job title
     headline_tokens = {
