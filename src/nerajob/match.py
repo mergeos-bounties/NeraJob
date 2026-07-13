@@ -47,8 +47,11 @@ def match_score(profile: Profile, job: JobPosting) -> dict:
     loc_score = 0.0
     pl = (profile.location or "").lower()
     jl = (job.location or "").lower()
+    prefers_remote = any(
+        tok in pl for tok in ("remote", "wfh", "anywhere", "worldwide")
+    ) or getattr(profile, "remote_ok", False)
     if job.remote or "remote" in jl:
-        loc_score = 10.0
+        loc_score = 12.0 if prefers_remote else 10.0
     elif pl and any(part in jl for part in pl.split() if len(part) > 2):
         loc_score = 10.0
 
