@@ -14,6 +14,7 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "go": {"go", "golang", "gin", "fiber"},
     "sql": {"sql", "postgres", "postgresql", "mysql", "sqlite", "database"},
     "cloud": {"cloud", "aws", "gcp", "azure", "s3", "lambda"},
+    "java": {"java", "spring", "kotlin", "jvm", "maven", "gradle"},
 }
 
 

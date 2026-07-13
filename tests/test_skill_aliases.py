@@ -30,3 +30,12 @@ def test_expand_skills_sql_and_cloud():
     cloud = expand_skills({"aws"})
     assert "cloud" in cloud
     assert "lambda" in cloud
+
+
+def test_expand_skills_java_kotlin():
+    java = expand_skills({"java"})
+    assert "spring" in java
+    assert "jvm" in java
+    kotlin = expand_skills({"kotlin"})
+    assert "java" in kotlin
+    assert "maven" in kotlin
