@@ -150,7 +150,7 @@ class MainWindow(QMainWindow):
 
         brand_row = QHBoxLayout()
         brand_row.setSpacing(8)
-        mark = QLabel("◆")
+        mark = QLabel("NJ")
         mark.setObjectName("brandMark")
         brand = QLabel("NeraJob")
         brand.setObjectName("brand")
@@ -158,22 +158,23 @@ class MainWindow(QMainWindow):
         brand_row.addWidget(brand)
         brand_row.addStretch(1)
         sl.addLayout(brand_row)
-        sub = QLabel("Scan · CV · Apply  ·  local-first")
+        sub = QLabel("Scan · CV · Apply · local-first")
         sub.setObjectName("brandSub")
         sl.addWidget(sub)
         sl.addSpacing(10)
 
-        sec = QLabel("Workspace")
+        sec = QLabel("WORKSPACE")
         sec.setObjectName("navSection")
         sl.addWidget(sec)
 
         self._nav_btns: list[QPushButton] = []
+        # ASCII labels only — emoji often render as □ in grab()/README previews
         self._nav_meta = [
-            ("scan", "🔍  Scan jobs"),
-            ("jobs", "📋  Job board"),
-            ("profile", "👤  Profile"),
-            ("cv", "📄  Build CV"),
-            ("apply", "🚀  Apply pack"),
+            ("scan", "Scan jobs"),
+            ("jobs", "Job board"),
+            ("profile", "Profile"),
+            ("cv", "Build CV"),
+            ("apply", "Apply pack"),
         ]
         for key, label in self._nav_meta:
             b = QPushButton(label)
@@ -220,7 +221,9 @@ class MainWindow(QMainWindow):
             s.setFixedHeight(48)
             # compact stats in topbar
             s.layout().setContentsMargins(12, 6, 12, 6)
-            s._value_label.setStyleSheet("font-size: 16px; font-weight: 800;")  # type: ignore[attr-defined]
+            s._value_label.setStyleSheet(
+                'font-family: "Segoe UI", Arial, sans-serif; font-size: 16px; font-weight: 700; color: #f8fafc;'
+            )  # type: ignore[attr-defined]
             tl.addWidget(s)
         lay.addWidget(top)
 

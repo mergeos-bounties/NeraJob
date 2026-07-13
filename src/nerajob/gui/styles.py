@@ -1,8 +1,11 @@
 """Modern dark theme for NeraJob Qt desktop — polished layout tokens."""
 
 STYLESHEET = """
-* {
-  font-family: "Segoe UI", "Inter", "SF Pro Text", system-ui, sans-serif;
+/* Use only widely installed Windows fonts — exotic stacks (Inter / system-ui)
+   can render as tofu boxes (□) in Qt grabs and some GPU drivers. */
+QWidget, QLabel, QPushButton, QLineEdit, QComboBox, QSpinBox,
+QTextEdit, QPlainTextEdit, QTableWidget, QHeaderView, QStatusBar, QAbstractItemView {
+  font-family: "Segoe UI", "Arial", "Helvetica", sans-serif;
   font-size: 13px;
   color: #e2e8f0;
 }
@@ -23,14 +26,16 @@ QWidget#content {
   background: #0a0f1a;
 }
 QLabel#brand {
-  font-size: 20px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 700;
   color: #22d3ee;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   padding: 0;
 }
 QLabel#brandMark {
-  font-size: 22px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #22d3ee;
   padding: 0 2px 0 0;
 }
 QLabel#brandSub {
@@ -69,10 +74,10 @@ QPushButton#navBtn:checked {
 
 /* ---- Typography ---- */
 QLabel#h1 {
-  font-size: 24px;
-  font-weight: 800;
+  font-size: 22px;
+  font-weight: 700;
   color: #f8fafc;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 QLabel#h2 {
   font-size: 13px;
@@ -94,8 +99,8 @@ QLabel#chip {
   font-weight: 700;
 }
 QLabel#statValue {
-  font-size: 22px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 700;
   color: #f8fafc;
 }
 QLabel#statLabel {

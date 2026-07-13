@@ -13,9 +13,14 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     from nerajob.gui.main_window import MainWindow
 
+    from PySide6.QtGui import QFont
+
     app = QApplication(sys.argv if argv is None else argv)
     app.setApplicationName("NeraJob")
     app.setOrganizationName("MergeOS")
+    # Explicit font so screenshots / headless captures never fall back to
+    # missing Inter/system-ui glyphs (tofu boxes in PNG previews).
+    app.setFont(QFont("Segoe UI", 10))
     win = MainWindow()
     win.show()
     return app.exec()
