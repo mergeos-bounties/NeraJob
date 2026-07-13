@@ -10,6 +10,7 @@ from nerajob.scrapers.lever import LeverScraper
 from nerajob.scrapers.remoteok import RemoteOKScraper
 from nerajob.scrapers.remotive import RemotiveScraper
 from nerajob.scrapers.sample import SampleScraper
+from nerajob.scrapers.smartrecruiters import SmartRecruitersScraper
 from nerajob.scrapers.themuse import TheMuseScraper
 from nerajob.scrapers.weworkremotely import WeWorkRemotelyScraper
 
@@ -27,6 +28,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
     Arbeitnow: live public API; set NERAJOB_ARBEITNOW_OFFLINE=1 for offline samples.
     Jobicy: live public API; set NERAJOB_JOBICY_OFFLINE=1 for offline samples.
     We Work Remotely: RSS feed; set NERAJOB_WWR_OFFLINE=1 for offline samples.
+    SmartRecruiters: set NERAJOB_SMARTRECRUITERS_COMPANIES to comma-separated company IDs.
     """
     scrapers: list[BaseScraper] = [
         SampleScraper(),
@@ -38,6 +40,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
         WeWorkRemotelyScraper(),
         LeverScraper(board_name=os.getenv("NERAJOB_LEVER_BOARD") or None),
         AshbyScraper(board_id=os.getenv("NERAJOB_ASHBY_BOARD") or None),
+        SmartRecruitersScraper(),
     ]
     return {s.name: s for s in scrapers}
 
