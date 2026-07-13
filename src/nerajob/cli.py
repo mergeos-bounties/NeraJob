@@ -8,6 +8,7 @@ from nerajob import __version__
 from nerajob.apply.assistant import prepare_application
 from nerajob.cv.builder import write_cv_files
 from nerajob.models import JobPosting
+from nerajob.scrapers.match_score import rank_jobs
 from nerajob.scrapers.registry import available_scrapers, get_scraper
 from nerajob.storage import (
     default_profile,
@@ -182,6 +183,49 @@ def apply_cmd(
     package, path = prepare_application(profile, job)
     console.print(f"[green]Application package saved:[/green] {path}")
     console.print(f"Cover note preview:\n\n{package.cover_note[:500]}…")
+
+
+@app.command("match")
+def match_cmd(
+    limit: int = typer.Option(20, "--limit", "-n", min=1, max=200),
+    min_score: float = typer.Option(0.0, "--min", "-m", min=0.0, max=100.0, help="Minimum match score"),
+    query: str = typer.Option("", "--query", "-q", help="Filter by keywords"),
+) -> None:
+    """Rank saved jobs by match score against your profile (0–100)."""
+    profile = load_profile()
+    if not profile:
+        console.print("[red]No profile. Run: nerajob profile init[/red]")
+        raise typer.Exit(code=1)
+
+    jobs = load_jobs()
+    if not jobs:
+        console.print("[yellow]No jobs yet. Run: nerajob scan -q python[/yellow]")
+        raise typer.Exit()
+
+    # Optional keyword filter
+    if query:
+        q = query.lower()
+        jobs = [j for j in jobs if q in (j.title + " " + j.company + " " + " ".join(j.tags)).lower()]
+
+    ranked = rank_jobs(jobs, profile)
+    ranked = [(j, s) for j, s in ranked if s >= min_score]
+
+    if not ranked:
+        console.print("[yellow]No jobs match your profile above the minimum score.[/yellow]")
+        raise typer.Exit()
+
+    table = Table(title=f"Jobs ranked by match ({len(ranked)} matches)")
+    table.add_column("Score", justify="right", style="cyan")
+    table.add_column("Title")
+    table.add_column("Company")
+    table.add_column("Source")
+    table.add_column("Location")
+
+    for job, score in ranked[:limit]:
+        score_label = f"{score:.0f}" if score == int(score) else f"{score:.1f}"
+        table.add_row(score_label, job.title, job.company, job.source, job.location)
+
+    console.print(table)
 
 
 if __name__ == "__main__":
