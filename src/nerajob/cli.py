@@ -38,6 +38,19 @@ def version_cmd() -> None:
     console.print(f"NeraJob {__version__}")
 
 
+@app.command("skills")
+def skills_cmd() -> None:
+    """List skill alias groups used by match scoring."""
+    from nerajob.match import SKILL_ALIASES
+
+    table = Table(title=f"Skill aliases ({len(SKILL_ALIASES)})")
+    table.add_column("Group")
+    table.add_column("Aliases")
+    for key, aliases in sorted(SKILL_ALIASES.items()):
+        table.add_row(key, ", ".join(sorted(aliases)))
+    console.print(table)
+
+
 @app.command("gui")
 def gui_cmd() -> None:
     """Launch the modern Qt desktop app (requires: pip install -e '.[gui]')."""
