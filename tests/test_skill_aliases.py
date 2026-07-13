@@ -12,3 +12,12 @@ def test_expand_skills_devops():
     out = expand_skills({"k8s"})
     assert "kubernetes" in out or "devops" in out
     assert SKILL_ALIASES
+
+
+def test_expand_skills_rust_and_go():
+    rust = expand_skills({"rust"})
+    assert "cargo" in rust
+    assert "tokio" in rust
+    go = expand_skills({"golang"})
+    assert "go" in go
+    assert "gin" in go
