@@ -5,6 +5,7 @@ import os
 from nerajob.scrapers.arbeitnow import ArbeitnowScraper
 from nerajob.scrapers.ashby import AshbyScraper
 from nerajob.scrapers.base import BaseScraper
+from nerajob.scrapers.jobicy import JobicyScraper
 from nerajob.scrapers.lever import LeverScraper
 from nerajob.scrapers.remoteok import RemoteOKScraper
 from nerajob.scrapers.remotive import RemotiveScraper
@@ -24,6 +25,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
 
     Remotive: live public API; set NERAJOB_REMOTIVE_OFFLINE=1 to force offline samples.
     Arbeitnow: live public API; set NERAJOB_ARBEITNOW_OFFLINE=1 for offline samples.
+    Jobicy: live public API; set NERAJOB_JOBICY_OFFLINE=1 for offline samples.
     We Work Remotely: RSS feed; set NERAJOB_WWR_OFFLINE=1 for offline samples.
     """
     scrapers: list[BaseScraper] = [
@@ -31,6 +33,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
         RemoteOKScraper(),
         RemotiveScraper(),
         ArbeitnowScraper(),
+        JobicyScraper(),
         TheMuseScraper(),
         WeWorkRemotelyScraper(),
         LeverScraper(board_name=os.getenv("NERAJOB_LEVER_BOARD") or None),
