@@ -12,6 +12,8 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "ml": {"ml", "machine learning", "pytorch", "tensorflow"},
     "rust": {"rust", "cargo", "tokio", "actix", "axum"},
     "go": {"go", "golang", "gin", "fiber"},
+    "sql": {"sql", "postgres", "postgresql", "mysql", "sqlite", "database"},
+    "cloud": {"cloud", "aws", "gcp", "azure", "s3", "lambda"},
 }
 
 

@@ -21,3 +21,12 @@ def test_expand_skills_rust_and_go():
     go = expand_skills({"golang"})
     assert "go" in go
     assert "gin" in go
+
+
+def test_expand_skills_sql_and_cloud():
+    sql = expand_skills({"postgres"})
+    assert "sql" in sql
+    assert "database" in sql
+    cloud = expand_skills({"aws"})
+    assert "cloud" in cloud
+    assert "lambda" in cloud
