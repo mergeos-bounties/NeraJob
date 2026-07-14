@@ -1,0 +1,132 @@
+[
+  {
+    "id": "job_01",
+    "title": "Python Developer",
+    "company": "TechCorp",
+    "location": "Remote",
+    "salary": "$80k-$120k",
+    "tags": [
+      "python",
+      "django",
+      "postgresql"
+    ],
+    "posted": "2026-07-10"
+  },
+  {
+    "id": "job_02",
+    "title": "Backend Engineer",
+    "company": "StartupXYZ",
+    "location": "Remote",
+    "salary": "$90k-$130k",
+    "tags": [
+      "python",
+      "fastapi",
+      "redis"
+    ],
+    "posted": "2026-07-11"
+  },
+  {
+    "id": "job_03",
+    "title": "Data Engineer",
+    "company": "DataFlow Inc",
+    "location": "Remote",
+    "salary": "$100k-$140k",
+    "tags": [
+      "python",
+      "spark",
+      "airflow"
+    ],
+    "posted": "2026-07-12"
+  },
+  {
+    "id": "job_04",
+    "title": "ML Engineer",
+    "company": "AI Solutions",
+    "location": "Remote",
+    "salary": "$120k-$160k",
+    "tags": [
+      "python",
+      "pytorch",
+      "transformers"
+    ],
+    "posted": "2026-07-12"
+  },
+  {
+    "id": "job_05",
+    "title": "Full Stack Developer",
+    "company": "WebAgency",
+    "location": "Remote",
+    "salary": "$70k-$100k",
+    "tags": [
+      "python",
+      "react",
+      "mongodb"
+    ],
+    "posted": "2026-07-13"
+  },
+  {
+    "id": "job_06",
+    "title": "DevOps Engineer",
+    "company": "CloudFirst",
+    "location": "Remote",
+    "salary": "$95k-$135k",
+    "tags": [
+      "python",
+      "docker",
+      "kubernetes"
+    ],
+    "posted": "2026-07-13"
+  },
+  {
+    "id": "job_07",
+    "title": "Automation Engineer",
+    "company": "AutoTech",
+    "location": "Remote",
+    "salary": "$85k-$115k",
+    "tags": [
+      "python",
+      "selenium",
+      "playwright"
+    ],
+    "posted": "2026-07-14"
+  },
+  {
+    "id": "job_08",
+    "title": "API Developer",
+    "company": "APIFirst",
+    "location": "Remote",
+    "salary": "$75k-$105k",
+    "tags": [
+      "python",
+      "fastapi",
+      "openapi"
+    ],
+    "posted": "2026-07-14"
+  },
+  {
+    "id": "job_09",
+    "title": "Security Engineer",
+    "company": "SecureNet",
+    "location": "Remote",
+    "salary": "$110k-$150k",
+    "tags": [
+      "python",
+      "security",
+      "penetration"
+    ],
+    "posted": "2026-07-14"
+  },
+  {
+    "id": "job_10",
+    "title": "Python Trainer",
+    "company": "EduTech",
+    "location": "Remote",
+    "salary": "$60k-$90k",
+    "tags": [
+      "python",
+      "training",
+      "documentation"
+    ],
+    "posted": "2026-07-14"
+  }
+]
