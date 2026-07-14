@@ -25,6 +25,7 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "product": {"product", "pm", "product manager", "roadmap", "agile", "scrum"},
     "writing": {"writing", "technical writing", "docs", "copywriting", "content"},
     "game": {"game", "gamedev", "unity", "unreal", "godot", "game design"},
+    "support": {"support", "customer support", "helpdesk", "zendesk", "intercom", "cs"},
 }
 
 
