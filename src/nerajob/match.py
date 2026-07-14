@@ -24,6 +24,7 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "embedded": {"embedded", "firmware", "rtos", "arduino", "esp32", "stm32", "c++"},
     "product": {"product", "pm", "product manager", "roadmap", "agile", "scrum"},
     "writing": {"writing", "technical writing", "docs", "copywriting", "content"},
+    "marketing": {"marketing", "growth", "seo", "sem", "content marketing", "demand gen"},
     "hr": {"hr", "human resources", "recruiting", "talent", "people ops", "ats"},
     "game": {"game", "gamedev", "unity", "unreal", "godot", "game design"},
     "support": {"support", "customer support", "helpdesk", "zendesk", "intercom", "cs"},
