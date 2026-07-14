@@ -16,6 +16,8 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "cloud": {"cloud", "aws", "gcp", "azure", "s3", "lambda"},
     "java": {"java", "spring", "kotlin", "jvm", "maven", "gradle"},
     "mobile": {"mobile", "android", "ios", "flutter", "react native", "swift", "kotlin"},
+    "security": {"security", "infosec", "appsec", "owasp", "penetration testing", "pentest"},
+    "data": {"data", "analytics", "etl", "spark", "airflow", "dbt", "pandas"},
 }
 
 
