@@ -22,6 +22,8 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "design": {"design", "figma", "ui", "ux", "product design", "wireframe"},
     "testing": {"testing", "qa", "selenium", "playwright", "cypress", "pytest", "junit"},
     "embedded": {"embedded", "firmware", "rtos", "arduino", "esp32", "stm32", "c++"},
+    "product": {"product", "pm", "product manager", "roadmap", "agile", "scrum"},
+    "writing": {"writing", "technical writing", "docs", "copywriting", "content"},
 }
 
 
