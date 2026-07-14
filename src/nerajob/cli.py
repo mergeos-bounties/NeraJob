@@ -97,6 +97,11 @@ def scan_cmd(
         "--min-score",
         help="If profile exists, drop jobs below this match score (0–100)",
     ),
+    min_salary: int = typer.Option(
+        0,
+        "--min-salary",
+        help="Filter jobs by minimum annual salary (e.g. 50000 for 50k)",
+    ),
 ) -> None:
     """Scan job sources and save matches under data/jobs.json."""
     names = list(available_scrapers()) if all_sources else [source]
@@ -155,6 +160,26 @@ def scan_cmd(
             )
         else:
             console.print("[yellow]--min-score ignored (no profile)[/yellow]")
+
+    if min_salary > 0:
+        from nerajob.models import parse_salary_value
+
+        before_s = len(collected)
+        filtered = []
+        skipped = 0
+        for job in collected:
+            parsed = parse_salary_value(job.salary or "")
+            if parsed is not None and parsed >= min_salary:
+                filtered.append(job)
+            elif parsed is None:
+                # Keep jobs with unparseable salary (don't filter them out)
+                filtered.append(job)
+            else:
+                skipped += 1
+        collected = filtered
+        console.print(
+            f"[dim]min-salary {min_salary}[/dim] {before_s} → {len(collected)} jobs (dropped {skipped} below threshold)"
+        )
 
     merged = upsert_jobs(collected)
     table = Table(title=f"Jobs saved ({len(collected)} new/updated, {len(merged)} total)")

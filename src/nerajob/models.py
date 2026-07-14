@@ -60,3 +60,23 @@ class ApplicationPackage(BaseModel):
     checklist: list[str] = Field(default_factory=list)
     cv_markdown_path: str = ""
     notes: str = ""
+
+
+def parse_salary_value(salary: str) -> int | None:
+    """Extract a numeric annual salary floor from a salary string. Returns None if unparseable."""
+    import re
+    if not salary or not salary.strip():
+        return None
+    s = salary.lower().replace(",", "").replace("€", "").replace("$", "").replace("£", "").strip()
+    # Try ranges like "80k-120k" or "80k – 120k"
+    m = re.search(r"(\d+)\s*k", s)
+    if m:
+        return int(m.group(1)) * 1000
+    # Try "80000-120000"
+    m = re.search(r"(\d{4,6})", s)
+    if m:
+        val = int(m.group(1))
+        # If first number looks like annual salary
+        if 10000 <= val <= 999999:
+            return val
+    return None
