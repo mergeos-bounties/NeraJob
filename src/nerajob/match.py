@@ -20,6 +20,8 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "data": {"data", "analytics", "etl", "spark", "airflow", "dbt", "pandas"},
     "web3": {"web3", "blockchain", "solidity", "ethereum", "solana", "smart contract", "defi"},
     "design": {"design", "figma", "ui", "ux", "product design", "wireframe"},
+    "testing": {"testing", "qa", "selenium", "playwright", "cypress", "pytest", "junit"},
+    "embedded": {"embedded", "firmware", "rtos", "arduino", "esp32", "stm32", "c++"},
 }
 
 
