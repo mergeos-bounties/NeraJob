@@ -9,6 +9,7 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "python": {"python", "django", "fastapi", "flask"},
     "javascript": {"javascript", "js", "typescript", "node", "react"},
     "devops": {"devops", "docker", "kubernetes", "k8s", "ci/cd"},
+    "ml_ai": {"machine learning", "ml", "deep learning", "nlp", "computer vision", "pytorch", "tensorflow"},
     "ml": {"ml", "machine learning", "pytorch", "tensorflow"},
     "rust": {"rust", "cargo", "tokio", "actix", "axum"},
     "go": {"go", "golang", "gin", "fiber"},
