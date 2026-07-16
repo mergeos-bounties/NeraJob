@@ -1,0 +1,3 @@
+Senior backend engineer who built Django APIs backed by PostgreSQL.
+Shipped Kubernetes workloads and React dashboards for internal users.
+Explored PyTorch NLP tooling for search relevance experiments.

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 from nerajob.models import JobPosting, Profile
 
 # Common skill aliases for resume ↔ job matching (offline-friendly).
@@ -44,6 +46,10 @@ SKILL_ALIASES: dict[str, set[str]] = {
 }
 
 
+def _alias_pattern(alias: str) -> re.Pattern[str]:
+    return re.compile(rf"(?<![a-z0-9]){re.escape(alias.lower())}(?![a-z0-9])")
+
+
 def expand_skills(skills: set[str] | list[str] | tuple[str, ...]) -> set[str]:
     out = {str(s).lower().strip() for s in skills if str(s).strip()}
     for s in list(out):
@@ -51,6 +57,21 @@ def expand_skills(skills: set[str] | list[str] | tuple[str, ...]) -> set[str]:
             if s == key or s in aliases:
                 out |= aliases | {key}
     return out
+
+
+def extract_skills_from_text(text: str) -> dict[str, list[str]]:
+    """Return canonical skill groups found in free text, with matched aliases."""
+    haystack = text.lower()
+    matches: dict[str, list[str]] = {}
+    for key, aliases in SKILL_ALIASES.items():
+        found = sorted(
+            alias
+            for alias in (aliases | {key})
+            if alias and _alias_pattern(alias).search(haystack)
+        )
+        if found:
+            matches[key] = found
+    return matches
 
 
 def match_score(profile: Profile, job: JobPosting) -> dict:
