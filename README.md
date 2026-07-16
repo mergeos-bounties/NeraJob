@@ -216,6 +216,7 @@ nerajob-gui
 | `nerajob scan --source …` | Scan one scraper |
 | `nerajob scan --all` | All registered scrapers |
 | `nerajob jobs list` | List cached jobs |
+| `nerajob jobs match` | Rank cached jobs with configurable match weights |
 | `nerajob cv build --target "…"` | Build Markdown + text CV |
 | `nerajob apply prepare --job-id <id>` | Apply package for one job |
 | `nerajob gui` / `nerajob-gui` | **Qt desktop app** (needs `.[gui]`) |
@@ -226,7 +227,12 @@ nerajob scan --source remoteok -q python -n 20
 nerajob cv build --target "Backend Engineer"
 nerajob apply prepare --job-id <id>
 nerajob jobs list
+nerajob jobs match --skill-weight 70 --title-weight 20 --location-weight 12
 ```
+
+Match scoring defaults to a 70-point skills cap, 20-point title/headline cap, and
+12-point location/remote cap. Adjust those weights when a search should favor
+role wording or location fit over direct skill hits.
 
 ---
 

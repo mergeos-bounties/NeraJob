@@ -9,6 +9,7 @@ from rich.table import Table
 from nerajob import __version__
 from nerajob.apply.assistant import prepare_application
 from nerajob.cv.builder import write_cv_files
+from nerajob.match import DEFAULT_MATCH_WEIGHTS, MatchWeights
 from nerajob.models import JobPosting
 from nerajob.scrapers.registry import available_scrapers, get_scraper
 from nerajob.storage import (
@@ -263,6 +264,24 @@ def jobs_export(
 def jobs_match(
     top: int = typer.Option(10, "--top", "-k", min=1, max=50),
     job_id: str | None = typer.Option(None, "--job-id", "-j"),
+    skill_weight: float = typer.Option(
+        DEFAULT_MATCH_WEIGHTS.skills,
+        "--skill-weight",
+        min=0.0,
+        help="Maximum score contribution from profile skill matches",
+    ),
+    title_weight: float = typer.Option(
+        DEFAULT_MATCH_WEIGHTS.title,
+        "--title-weight",
+        min=0.0,
+        help="Maximum score contribution from headline/title overlap",
+    ),
+    location_weight: float = typer.Option(
+        DEFAULT_MATCH_WEIGHTS.location,
+        "--location-weight",
+        min=0.0,
+        help="Maximum score contribution from location or remote fit",
+    ),
 ) -> None:
     """Rank saved jobs against your profile (keyword skill match)."""
     from nerajob.match import match_score, rank_jobs
@@ -276,14 +295,19 @@ def jobs_match(
     if not jobs:
         console.print("[yellow]No jobs. Run: nerajob scan -q python[/yellow]")
         raise typer.Exit()
+    weights = MatchWeights(
+        skills=skill_weight,
+        title=title_weight,
+        location=location_weight,
+    )
     if job_id:
         job = next((j for j in jobs if j.id == job_id), None)
         if not job:
             console.print(f"[red]Unknown job id:[/red] {job_id}")
             raise typer.Exit(1)
-        console.print_json(data=match_score(profile, job))
+        console.print_json(data=match_score(profile, job, weights=weights))
         return
-    ranked = rank_jobs(profile, jobs, top_k=top)
+    ranked = rank_jobs(profile, jobs, top_k=top, weights=weights)
     table = Table(title=f"Job matches (top {len(ranked)})")
     table.add_column("Score")
     table.add_column("Band")
