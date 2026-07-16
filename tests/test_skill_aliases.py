@@ -48,3 +48,15 @@ def test_expand_skills_mobile():
     ios = expand_skills({"ios"})
     assert "mobile" in ios
     assert "swift" in ios
+
+
+def test_expand_skills_education_and_edtech():
+    lms = expand_skills({"lms"})
+    assert "education" in lms
+    assert "curriculum" in lms
+    assert "assessment" in lms
+
+    tutoring = expand_skills({"tutoring"})
+    assert "edtech" in tutoring
+    assert "learning management system" in tutoring
+    assert "instructional design" in tutoring
