@@ -1,0 +1,29 @@
+[
+  {
+    "name": "backend",
+    "profile": {
+      "headline": "Python Backend Engineer",
+      "location": "Remote",
+      "skills": ["python", "fastapi", "postgres"]
+    },
+    "relevant_job_ids": ["backend-platform"]
+  },
+  {
+    "name": "frontend",
+    "profile": {
+      "headline": "Frontend Engineer",
+      "location": "Remote",
+      "skills": ["typescript", "react", "figma"]
+    },
+    "relevant_job_ids": ["frontend-product"]
+  },
+  {
+    "name": "cloud",
+    "profile": {
+      "headline": "Cloud Platform Engineer",
+      "location": "Remote",
+      "skills": ["kubernetes", "aws", "terraform"]
+    },
+    "relevant_job_ids": ["cloud-reliability"]
+  }
+]

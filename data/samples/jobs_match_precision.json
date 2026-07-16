@@ -1,0 +1,32 @@
+[
+  {
+    "id": "backend-platform",
+    "source": "fixture",
+    "title": "Python Platform Engineer",
+    "company": "Northstar",
+    "location": "Remote",
+    "description": "Build FastAPI services, PostgreSQL data stores, and Docker deployment tooling.",
+    "tags": ["python", "fastapi", "postgres", "docker"],
+    "remote": true
+  },
+  {
+    "id": "frontend-product",
+    "source": "fixture",
+    "title": "Frontend Product Engineer",
+    "company": "Canvas",
+    "location": "Remote",
+    "description": "Create accessible React and TypeScript product experiences with Figma.",
+    "tags": ["typescript", "react", "figma"],
+    "remote": true
+  },
+  {
+    "id": "cloud-reliability",
+    "source": "fixture",
+    "title": "Cloud Reliability Engineer",
+    "company": "Orbit",
+    "location": "Remote",
+    "description": "Operate Kubernetes workloads with Terraform, AWS, and observability practices.",
+    "tags": ["kubernetes", "terraform", "aws", "sre"],
+    "remote": true
+  }
+]
