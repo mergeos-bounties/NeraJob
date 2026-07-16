@@ -1,4 +1,9 @@
-from nerajob.match import SKILL_ALIASES, expand_skills
+import json
+
+from typer.testing import CliRunner
+
+from nerajob.cli import app
+from nerajob.match import SKILL_ALIASES, expand_skills, extract_skills_from_text
 
 
 def test_expand_skills_python_aliases():
@@ -48,3 +53,40 @@ def test_expand_skills_mobile():
     ios = expand_skills({"ios"})
     assert "mobile" in ios
     assert "swift" in ios
+
+
+def test_extract_skills_from_text_expands_alias_groups():
+    text = (
+        "Built Django APIs with PostgreSQL, Kubernetes, React dashboards, "
+        "and PyTorch NLP tooling."
+    )
+    matches = extract_skills_from_text(text)
+    assert matches["python"] == ["django"]
+    assert matches["sql"] == ["postgresql"]
+    assert matches["devops"] == ["kubernetes"]
+    assert matches["javascript"] == ["react"]
+    assert matches["ml_ai"] == ["nlp", "pytorch"]
+
+
+def test_extract_skills_from_text_uses_token_boundaries():
+    matches = extract_skills_from_text("Django engineer who ships reliable APIs")
+    assert "go" not in matches
+
+
+def test_skills_extract_cli_reads_text_fixture():
+    runner = CliRunner()
+    result = runner.invoke(
+        app,
+        [
+            "skills",
+            "extract",
+            "--text-file",
+            "data/samples/resume_skills.txt",
+            "--json",
+        ],
+    )
+    assert result.exit_code == 0, result.output
+    payload = json.loads(result.output)
+    assert {"python", "sql", "devops", "javascript"}.issubset(set(payload["skills"]))
+    assert payload["matches"]["python"] == ["django"]
+    assert "fastapi" in payload["expanded"]["python"]

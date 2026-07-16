@@ -23,8 +23,10 @@ from nerajob.storage import (
 app = typer.Typer(help="NeraJob — scan jobs, build CV, prepare applications.", no_args_is_help=True)
 profile_app = typer.Typer(help="Manage your profile / CV source data.")
 jobs_app = typer.Typer(help="Inspect saved jobs.")
+skills_app = typer.Typer(help="Inspect and extract skill aliases.", invoke_without_command=True)
 app.add_typer(profile_app, name="profile")
 app.add_typer(jobs_app, name="jobs")
+app.add_typer(skills_app, name="skills")
 console = Console()
 
 
@@ -38,8 +40,7 @@ def version_cmd() -> None:
     console.print(f"NeraJob {__version__}")
 
 
-@app.command("skills")
-def skills_cmd() -> None:
+def _print_skill_aliases() -> None:
     """List skill alias groups used by match scoring."""
     from nerajob.match import SKILL_ALIASES
 
@@ -48,6 +49,51 @@ def skills_cmd() -> None:
     table.add_column("Aliases")
     for key, aliases in sorted(SKILL_ALIASES.items()):
         table.add_row(key, ", ".join(sorted(aliases)))
+    console.print(table)
+
+
+@skills_app.callback(invoke_without_command=True)
+def skills_cmd(ctx: typer.Context) -> None:
+    """List skill alias groups used by match scoring."""
+    if ctx.invoked_subcommand is None:
+        _print_skill_aliases()
+
+
+@skills_app.command("extract")
+def skills_extract_cmd(
+    text_file: Path = typer.Option(
+        ...,
+        "--text-file",
+        exists=True,
+        file_okay=True,
+        dir_okay=False,
+        readable=True,
+        help="Plain-text resume or profile file to scan offline.",
+    ),
+    json_output: bool = typer.Option(False, "--json", help="Print machine-readable JSON."),
+) -> None:
+    """Extract skill tokens from free text with alias expansion."""
+    from nerajob.match import expand_skills, extract_skills_from_text
+
+    text = text_file.read_text(encoding="utf-8")
+    matches = extract_skills_from_text(text)
+    expanded = {skill: sorted(expand_skills({skill})) for skill in matches}
+    payload = {
+        "source": str(text_file),
+        "skills": sorted(matches),
+        "matches": matches,
+        "expanded": expanded,
+    }
+    if json_output:
+        console.print_json(data=payload)
+        return
+
+    table = Table(title=f"Extracted skills ({len(matches)})")
+    table.add_column("Skill")
+    table.add_column("Matched aliases")
+    table.add_column("Expanded aliases")
+    for skill in sorted(matches):
+        table.add_row(skill, ", ".join(matches[skill]), ", ".join(expanded[skill]))
     console.print(table)
 
 
