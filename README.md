@@ -24,6 +24,7 @@
 - [Repository layout](#repository-layout)
 - [Data layout](#data-layout)
 - [Adding a job site](#adding-a-job-site)
+- [Skill aliases](#skill-aliases)
 - [Compliance](#compliance)
 - [Development](#development)
 - [MergeOS bounties](#mergeos-bounties)
@@ -273,6 +274,7 @@ src/nerajob/
   cv/builder.py
   apply/assistant.py
 docs/SOURCES.md
+docs/SKILL_ALIASES.md
 docs/screenshots/
 docs/diagrams/
 ```
@@ -301,6 +303,16 @@ data/
 5. Prefer official APIs; document rate limits and ToS notes in the PR
 
 See [docs/BOUNTY.md](docs/BOUNTY.md) for MergeOS scraper bounty acceptance.
+
+---
+
+## Skill aliases
+
+NeraJob expands profile skills with `SKILL_ALIASES` in `src/nerajob/match.py`
+before scoring jobs. When adding a new skill domain, keep the alias set focused
+and add tests that exercise `expand_skills()`.
+
+Contributor guide: **[docs/SKILL_ALIASES.md](docs/SKILL_ALIASES.md)**.
 
 ---
 
