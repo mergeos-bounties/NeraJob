@@ -1,0 +1,89 @@
+[
+  {
+    "id": "remote_001",
+    "source": "fixture",
+    "title": "Senior Python Developer",
+    "company": "RemoteFirst Inc",
+    "location": "Remote",
+    "url": "https://example.com/jobs/remote_001",
+    "description": "Build scalable backend services with Python and FastAPI. 100% remote team.",
+    "tags": [
+      "python",
+      "fastapi",
+      "postgresql"
+    ],
+    "salary": "$120k-$160k",
+    "remote": true,
+    "scraped_at": "2026-07-15T00:00:00Z"
+  },
+  {
+    "id": "remote_002",
+    "source": "fixture",
+    "title": "Frontend Engineer",
+    "company": "DistributedCo",
+    "location": "Worldwide",
+    "url": "https://example.com/jobs/remote_002",
+    "description": "Build React applications for a fully distributed team.",
+    "tags": [
+      "javascript",
+      "react",
+      "typescript"
+    ],
+    "salary": "$100k-$140k",
+    "remote": true,
+    "scraped_at": "2026-07-15T00:00:00Z"
+  },
+  {
+    "id": "remote_003",
+    "source": "fixture",
+    "title": "DevOps Engineer",
+    "company": "CloudNative Labs",
+    "location": "Remote (US)",
+    "url": "https://example.com/jobs/remote_003",
+    "description": "Manage cloud infrastructure for remote-first startup.",
+    "tags": [
+      "devops",
+      "docker",
+      "kubernetes",
+      "aws"
+    ],
+    "salary": "$130k-$170k",
+    "remote": true,
+    "scraped_at": "2026-07-15T00:00:00Z"
+  },
+  {
+    "id": "remote_004",
+    "source": "fixture",
+    "title": "Technical Writer",
+    "company": "DocsGlobal",
+    "location": "Remote",
+    "url": "https://example.com/jobs/remote_004",
+    "description": "Write API documentation and developer guides for a remote team.",
+    "tags": [
+      "writing",
+      "documentation",
+      "markdown"
+    ],
+    "salary": "$80k-$110k",
+    "remote": true,
+    "scraped_at": "2026-07-15T00:00:00Z"
+  },
+  {
+    "id": "remote_005",
+    "source": "fixture",
+    "title": "QA Engineer",
+    "company": "TestAnywhere",
+    "location": "Remote (EU)",
+    "url": "https://example.com/jobs/remote_005",
+    "description": "Automated testing for remote SaaS platform.",
+    "tags": [
+      "qa",
+      "selenium",
+      "playwright",
+      "python"
+    ],
+    "salary": "$90k-$120k",
+    "remote": true,
+    "scraped_at": "2026-07-15T00:00:00Z"
+  }
+]
