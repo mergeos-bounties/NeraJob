@@ -22,3 +22,4 @@ data/*.local.json
 .env
 .env.*
 !.env.example
+.aider*
