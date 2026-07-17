@@ -35,6 +35,7 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "python": {"python", "django", "fastapi", "flask"},
     "javascript": {"javascript", "js", "typescript", "node", "react"},
     "devops": {"devops", "docker", "kubernetes", "k8s", "ci/cd"},
+    "security_ops": {"secops", "soc analyst", "incident response", "threat hunting", "siem", "edr", "blue team", "detection"},
     "sales_eng": {"solutions engineer", "sales engineer", "pre-sales", "demo", "poc", "technical account", "se ", "rfp"},
     "customer_success": {"customer success", "csm", "account management", "onboarding", "retention", "support", "helpdesk", "zendesk"},
     "qa_test": {"qa", "quality assurance", "selenium", "cypress", "playwright", "test automation", "sdet", "pytest"},
