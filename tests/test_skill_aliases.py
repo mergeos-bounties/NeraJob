@@ -74,6 +74,15 @@ def test_expand_skills_cloud_wave2():
     assert "pulumi" in cloud
     assert "gke" in cloud or "eks" in cloud
     assert "cdn" in cloud
+    # new cloud aliases added for bounty #57
+    for s in ["ec2", "ecs", "cloudformation", "cloudrun", "cloudfunctions",
+              "pulumi", "cdk", "route53", "cloudfront", "iam", "vpc",
+              "eks", "gke", "aks", "cloudwatch", "cloudtrail"]:
+        out = expand_skills({s})
+        assert "cloud" in out, f"expected 'cloud' in expansion of {s}"
+    # terraform bridges cloud + devops
+    assert "terraform" in expand_skills({"cloud"})
+    assert "terraform" in expand_skills({"devops"})
 
 
 def test_expand_skills_devops_wave2():
@@ -88,6 +97,12 @@ def test_expand_skills_devops_wave2():
     assert "prometheus" in devops
     assert "grafana" in devops
     assert "infrastructure as code" in devops or "iac" in devops
+    # new devops aliases added for bounty #57
+    for s in ["helm", "ansible", "sre", "site reliability", "prometheus",
+              "grafana", "istio", "argocd", "jenkins", "github actions",
+              "gitlab ci", "vault", "consul", "nomad"]:
+        out = expand_skills({s})
+        assert "devops" in out, f"expected 'devops' in expansion of {s}"
 
 
 def test_expand_skills_mobile_wave2():
@@ -101,6 +116,12 @@ def test_expand_skills_mobile_wave2():
     assert "xcode" in mob
     assert "android studio" in mob
     assert "pwa" in mob or "progressive web app" in mob
+    # new mobile aliases added for bounty #58
+    for s in ["objc", "objective-c", "swiftui", "jetpack compose",
+              "xamarin", "ionic", "cordova", "mobile dev", "app store",
+              "play store", "expo"]:
+        out = expand_skills({s})
+        assert "mobile" in out, f"expected 'mobile' in expansion of {s}"
 
 
 def test_expand_skills_finance_wave2():
@@ -115,3 +136,10 @@ def test_expand_skills_finance_wave2():
     assert "plaid" in fin
     assert "payment gateway" in fin
     assert "wealth management" in fin
+    # new finance/fintech aliases added for bounty #59
+    for s in ["payments", "ledger", "kyc", "aml", "risk", "quant",
+              "quantitative", "trading", "settlement", "clearing",
+              "underwriting", "treasury", "stripe", "plaid", "swift",
+              "iso20022", "bloomberg", "reconciliation"]:
+        out = expand_skills({s})
+        assert "finance" in out, f"expected 'finance' in expansion of {s}"
