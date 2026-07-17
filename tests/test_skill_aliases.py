@@ -60,3 +60,21 @@ def test_expand_skills_education_and_edtech():
     assert "edtech" in tutoring
     assert "learning management system" in tutoring
     assert "instructional design" in tutoring
+
+
+def test_expand_skills_product_design_and_ux():
+    figma = expand_skills({"figma"})
+    assert "ux_design" in figma
+    assert "user research" in figma
+    assert "prototype" in figma
+    assert "design system" in figma
+
+    research = expand_skills({"user interview"})
+    assert "product design" in research
+    assert "wireframe" in research
+    assert "usability testing" in research
+
+    architecture = expand_skills({"information architecture"})
+    assert "interaction design" in architecture
+    assert "journey mapping" in architecture
+    assert "figma" in architecture
