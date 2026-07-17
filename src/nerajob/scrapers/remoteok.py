@@ -4,7 +4,8 @@ import hashlib
 
 import httpx
 
-from nerajob.config import http_timeout, user_agent
+from nerajob.config import user_agent
+from nerajob.http import create_client
 from nerajob.models import JobPosting
 from nerajob.scrapers.base import BaseScraper
 
@@ -21,17 +22,12 @@ class RemoteOKScraper(BaseScraper):
     API_URL = "https://remoteok.com/api"
 
     def search(self, query: str, location: str = "", limit: int = 20) -> list[JobPosting]:
-        headers = {
-            "User-Agent": user_agent(),
-            "Accept": "application/json",
-        }
         try:
-            with httpx.Client(timeout=http_timeout(), headers=headers, follow_redirects=True) as client:
-                response = client.get(self.API_URL)
-                response.raise_for_status()
-                payload = response.json()
+            client = create_client()
+            response = client.get(self.API_URL, headers={"Accept": "application/json"})
+            response.raise_for_status()
+            payload = response.json()
         except Exception:
-            # Network or API failure should not crash the CLI; caller can fall back.
             return []
 
         if not isinstance(payload, list):
@@ -75,7 +71,6 @@ class RemoteOKScraper(BaseScraper):
 
 
 def _strip_html(value: str) -> str:
-    # Lightweight strip without requiring BS4 for API JSON text.
     import re
 
     text = re.sub(r"<[^>]+>", " ", value)
