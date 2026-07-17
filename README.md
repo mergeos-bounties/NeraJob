@@ -302,6 +302,51 @@ data/
 
 See [docs/BOUNTY.md](docs/BOUNTY.md) for MergeOS scraper bounty acceptance.
 
+## Adding a skill domain
+
+Skill aliases live in `src/nerajob/match.py` as `SKILL_ALIASES` — a `dict[str, set[str]]`. Each key is a canonical skill domain, and its set contains matching keywords used for resume ↔ job matching via `expand_skills()`.
+
+### Pattern
+
+Add a new domain entry in `SKILL_ALIASES`:
+
+```python
+"new_domain": {"new_domain", "alias1", "alias2", "alias3"},
+```
+
+Then add a test in `tests/test_skill_aliases.py`:
+
+```python
+def test_expand_skills_new_domain():
+    out = expand_skills({"new_domain"})
+    assert "alias1" in out
+    assert "alias2" in out
+```
+
+Verify with the CLI:
+
+```bash
+nerajob skills | grep new_domain
+pytest tests/test_skill_aliases.py -q
+```
+
+### Existing domains (for reference)
+
+Run `nerajob skills` to list all domains and their aliases.
+
+| Domain key | Covers |
+| --- | --- |
+| `python` | django, fastapi, flask |
+| `javascript` | js, typescript, node, react |
+| `devops` | docker, kubernetes, k8s, ci/cd |
+| `ml_ai` | machine learning, deep learning, nlp, pytorch, tensorflow |
+| `data_engineering` | etl, spark, airflow, dbt, warehouse |
+| `cybersecurity` | soc, siem, iam, infosec |
+| `education` | teaching, curriculum, edtech, tutor |
+| *(full list via `nerajob skills`)* | |
+
+Add new domains that don't overlap with existing keys. Each domain set should be self-contained — aliases only expand inward, not across domains.
+
 ---
 
 ## Compliance
