@@ -53,6 +53,14 @@ class JobPosting(BaseModel):
     raw: dict[str, Any] = Field(default_factory=dict)
 
 
+class ScanPreset(BaseModel):
+    remote_only: bool = False
+    skill_filters: list[str] = Field(default_factory=list)
+    min_score: float = 0.0
+    min_salary: int = 0
+    max_results: int = 20
+
+
 class ApplicationPackage(BaseModel):
     job_id: str
     created_at: str = Field(default_factory=utc_now_iso)

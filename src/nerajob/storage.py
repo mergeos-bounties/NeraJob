@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 from typing import Iterable
 
-from nerajob.config import APPLICATIONS_DIR, JOBS_PATH, PROFILE_PATH
-from nerajob.models import ApplicationPackage, Education, Experience, JobPosting, Profile
+from nerajob.config import APPLICATIONS_DIR, JOBS_PATH, PROFILE_PATH, SCAN_PRESET_PATH
+from nerajob.models import ApplicationPackage, Education, Experience, JobPosting, Profile, ScanPreset
 
 
 def _read_json(path: Path, default):
@@ -80,6 +80,15 @@ def get_job(job_id: str) -> JobPosting | None:
         if job.id == job_id:
             return job
     return None
+
+
+def load_scan_preset() -> ScanPreset:
+    return ScanPreset.model_validate(_read_json(SCAN_PRESET_PATH, {}))
+
+
+def save_scan_preset(preset: ScanPreset) -> Path:
+    _write_json(SCAN_PRESET_PATH, preset.model_dump())
+    return SCAN_PRESET_PATH
 
 
 def save_application(package: ApplicationPackage) -> Path:

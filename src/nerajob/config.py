@@ -34,3 +34,4 @@ def http_timeout() -> float:
 PROFILE_PATH = data_dir() / "profile.json"
 JOBS_PATH = data_dir() / "jobs.json"
 APPLICATIONS_DIR = data_dir() / "applications"
+SCAN_PRESET_PATH = data_dir() / "scan-preset.json"

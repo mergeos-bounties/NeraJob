@@ -7,18 +7,21 @@ from rich.console import Console
 from rich.table import Table
 
 from nerajob import __version__
-from nerajob.match import SKILL_ALIASES, expand_skills, extract_skills_from_text
+from nerajob.match import SKILL_ALIASES, extract_skills_from_text
 from nerajob.apply.assistant import prepare_application
 from nerajob.cv.builder import write_cv_files
 from nerajob.match import DEFAULT_MATCH_WEIGHTS, MatchWeights
 from nerajob.models import JobPosting
 from nerajob.scrapers.registry import available_scrapers, get_scraper
+from nerajob.models import ScanPreset
 from nerajob.storage import (
     default_profile,
     get_job,
     load_jobs,
     load_profile,
+    load_scan_preset,
     save_profile,
+    save_scan_preset,
     upsert_jobs,
 )
 
@@ -103,6 +106,30 @@ def profile_show() -> None:
     console.print_json(profile.model_dump_json(indent=2))
 
 
+@profile_app.command("preset")
+def profile_preset(
+    remote_only: bool | None = typer.Option(None, "--remote-only", help="Filter to remote jobs by default"),
+    skill_filters: str = typer.Option("", "--skills", help="Comma-separated skills to filter on"),
+    min_score: float = typer.Option(-1.0, "--min-score", help="Minimum match score (0–100)"),
+    min_salary: int = typer.Option(-1, "--min-salary", help="Minimum annual salary"),
+    max_results: int = typer.Option(-1, "--max-results", help="Max results per scan"),
+) -> None:
+    preset = load_scan_preset()
+    if remote_only is not None:
+        preset = preset.model_copy(update={"remote_only": remote_only})
+    if skill_filters:
+        preset = preset.model_copy(update={"skill_filters": [s.strip() for s in skill_filters.split(",") if s.strip()]})
+    if min_score >= 0:
+        preset = preset.model_copy(update={"min_score": min_score})
+    if min_salary >= 0:
+        preset = preset.model_copy(update={"min_salary": min_salary})
+    if max_results >= 0:
+        preset = preset.model_copy(update={"max_results": max_results})
+    save_scan_preset(preset)
+    console.print("[green]Scan preset saved:[/green]")
+    console.print_json(preset.model_dump_json(indent=2))
+
+
 @app.command("scan")
 def scan_cmd(
     query: str = typer.Option("", "--query", "-q", help="Keywords"),
@@ -115,19 +142,32 @@ def scan_cmd(
         help=f"Scraper name: {', '.join(sorted(available_scrapers()))}",
     ),
     all_sources: bool = typer.Option(False, "--all", help="Run all registered scrapers"),
-    remote_only: bool = typer.Option(False, "--remote-only", help="Keep only remote jobs"),
+    remote_only: bool | None = typer.Option(None, "--remote-only/--no-remote-only", help="Keep only remote jobs"),
+    skill_filters: str = typer.Option("", "--skills", help="Comma-separated skills to filter on"),
     min_score: float = typer.Option(
-        0.0,
+        -1.0,
         "--min-score",
         help="If profile exists, drop jobs below this match score (0–100)",
     ),
     min_salary: int = typer.Option(
-        0,
+        -1,
         "--min-salary",
         help="Filter jobs by minimum annual salary (e.g. 50000 for 50k)",
     ),
 ) -> None:
     """Scan job sources and save matches under data/jobs.json."""
+    preset = load_scan_preset()
+    if remote_only is None:
+        remote_only = preset.remote_only
+    if not skill_filters:
+        skill_filters = ",".join(preset.skill_filters)
+    if min_score < 0:
+        min_score = preset.min_score
+    if min_salary < 0:
+        min_salary = preset.min_salary
+    if limit == 20 and preset.max_results:
+        limit = preset.max_results
+
     names = list(available_scrapers()) if all_sources else [source]
     collected: list[JobPosting] = []
     for name in names:
@@ -145,8 +185,8 @@ def scan_cmd(
         console.print("[yellow]No hits from live source; falling back to sample feed.[/yellow]")
         collected = get_scraper("sample").search(query=query, location=location, limit=limit)
 
-    # Dedupe across sources (scan --all): prefer first occurrence, keep stable order
-    before = len(collected)
+    # Dedupe across sources: prefer first occurrence, keep stable order
+    fetched_count = len(collected)
     seen_keys: set[str] = set()
     deduped: list[JobPosting] = []
     for job in collected:
@@ -156,8 +196,8 @@ def scan_cmd(
         seen_keys.add(key)
         deduped.append(job)
     collected = deduped
-    if all_sources and before != len(collected):
-        console.print(f"[dim]Deduped[/dim] {before} → {len(collected)} unique jobs")
+    if fetched_count != len(collected):
+        console.print(f"[dim]Deduped[/dim] {fetched_count} fetched → {len(collected)} unique (dropped {fetched_count - len(collected)} duplicates)")
 
     if remote_only:
         collected = [
@@ -166,6 +206,18 @@ def scan_cmd(
             if j.remote or "remote" in (j.location or "").lower()
         ]
         console.print(f"[dim]remote-only[/dim] {len(collected)} jobs")
+
+    if skill_filters:
+        filter_skills = [s.strip().lower() for s in skill_filters.split(",") if s.strip()]
+        before_s = len(collected)
+        scored = []
+        for job in collected:
+            job_tags = [t.lower() for t in (job.tags or [])]
+            job_skills = (job.description or "").lower()
+            if any(s in job_tags or s in job_skills for s in filter_skills):
+                scored.append(job)
+        collected = scored
+        console.print(f"[dim]skill-filters ({','.join(filter_skills)})[/dim] {before_s} → {len(collected)} jobs")
 
     if min_score > 0:
         from nerajob.match import match_score
