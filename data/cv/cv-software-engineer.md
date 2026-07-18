@@ -1,0 +1,23 @@
+# Your Name
+**Software Engineer**  
+Remote · you@example.com
+
+https://github.com/your-handle · https://linkedin.com/in/your-handle
+
+## Summary
+Results-driven engineer building reliable products.
+
+## Skills
+Python, APIs, SQL
+
+## Experience
+### Software Engineer — Example Co
+*2022 – Present*
+- Built APIs and automation used by product teams
+- Improved reliability and delivery speed
+
+## Education
+- B.S. Computer Science · University · 2021
+
+## Languages
+English

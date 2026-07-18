@@ -13,7 +13,6 @@ from nerajob.cv.builder import write_cv_files
 from nerajob.match import DEFAULT_MATCH_WEIGHTS, MatchWeights
 from nerajob.models import JobPosting
 from nerajob.scrapers.registry import available_scrapers, get_scraper
-from nerajob.models import ScanPreset
 from nerajob.storage import (
     default_profile,
     get_job,
