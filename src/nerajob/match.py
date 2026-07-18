@@ -92,8 +92,6 @@ def extract_skills_from_text(text: str) -> dict[str, set[str]]:
 
     Returns a mapping of domain → matched skill tokens found in the text.
     """
-    import re
-
     normalized = text.lower()
     result: dict[str, set[str]] = {}
     for domain, aliases in SKILL_ALIASES.items():

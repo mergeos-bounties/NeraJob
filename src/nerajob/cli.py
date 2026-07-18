@@ -7,7 +7,7 @@ from rich.console import Console
 from rich.table import Table
 
 from nerajob import __version__
-from nerajob.match import SKILL_ALIASES, expand_skills, extract_skills_from_text
+from nerajob.match import SKILL_ALIASES, extract_skills_from_text
 from nerajob.apply.assistant import prepare_application
 from nerajob.cv.builder import write_cv_files
 from nerajob.match import DEFAULT_MATCH_WEIGHTS, MatchWeights
