@@ -269,11 +269,39 @@ def scan_cmd(
 
 
 @jobs_app.command("list")
-def jobs_list(limit: int = typer.Option(30, min=1, max=200)) -> None:
+def jobs_list(
+    limit: int = typer.Option(30, min=1, max=200),
+    sort: str | None = typer.Option(
+        None,
+        "--sort",
+        help="Sort by 'match' score against profile (requires existing profile)",
+    ),
+) -> None:
     jobs = load_jobs()[:limit]
     if not jobs:
         console.print("[yellow]No jobs yet. Run: nerajob scan -q python[/yellow]")
         raise typer.Exit()
+
+    if sort == "match":
+        profile = load_profile()
+        if not profile:
+            console.print("[yellow]No profile — can't sort by match score. Showing unsorted.[/yellow]")
+        else:
+            from nerajob.match import match_score
+
+            scored = [(job, match_score(profile, job)) for job in jobs]
+            scored.sort(key=lambda x: x[1]["score"], reverse=True)
+            table = Table(title=f"Saved jobs ({len(jobs)}) — sorted by match")
+            table.add_column("Score")
+            table.add_column("ID")
+            table.add_column("Title")
+            table.add_column("Company")
+            table.add_column("Source")
+            for job, m in scored:
+                table.add_row(str(m["score"]), job.id, job.title, job.company, job.source)
+            console.print(table)
+            return
+
     table = Table(title=f"Saved jobs ({len(jobs)})")
     table.add_column("ID")
     table.add_column("Title")
