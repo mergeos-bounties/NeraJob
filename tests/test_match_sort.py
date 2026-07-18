@@ -1,6 +1,5 @@
 """Tests for `nerajob jobs list --sort match`."""
 
-from pathlib import Path
 
 from nerajob.match import MatchWeights, match_score
 from nerajob.models import JobPosting, Profile
