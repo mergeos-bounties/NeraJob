@@ -369,8 +369,11 @@ Contributor guide: **[docs/SKILL_ALIASES.md](docs/SKILL_ALIASES.md)**.
 
 ## Compliance
 
-NeraJob is built for **ethical, ToS-aware** job discovery:
+See [SCRAPING_POLICY.md](docs/SCRAPING_POLICY.md) for ethical scraping guidelines and rate limit policies.
 
+## MergeOS bounties
+
+See [docs/BOUNTY.md](docs/BOUNTY.md) for bounty details.
 - Prefer **official / public APIs** over brittle HTML scrapers
 - Respect **robots.txt**, published rate limits, and site **Terms of Service**
 - **Never** commit secrets, long-lived tokens, or production `.env` values
