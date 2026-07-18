@@ -315,13 +315,19 @@ def jobs_list(
 @app.command("cv")
 def cv_cmd(
     target: str = typer.Option("", "--target", "-t", help="Target role title for tailoring"),
+    fmt: str = typer.Option("md", "--format", "-f", help="Output format: md or pdf"),
 ) -> None:
     """Build Markdown + text CV from your profile."""
     profile = load_profile()
     if not profile:
         console.print("[red]No profile. Run: nerajob profile init[/red]")
         raise typer.Exit(code=1)
-    paths = write_cv_files(profile, target_role=target)
+    paths = write_cv_files(profile, target_role=target, fmt=fmt)
+    if fmt == "pdf" and "pdf" not in paths:
+        console.print(
+            "[yellow]PDF libraries not available.[/yellow] Install optional deps: "
+            "[bold]pip install nerajob[pdf][/bold]"
+        )
     console.print("[green]CV written:[/green]")
     for kind, path in paths.items():
         console.print(f"  {kind}: {path}")

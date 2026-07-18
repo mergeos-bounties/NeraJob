@@ -18,6 +18,7 @@ Thumbs.db
 data/profile.json
 data/jobs.json
 data/applications/
+data/cv/
 data/*.local.json
 .env
 .env.*
