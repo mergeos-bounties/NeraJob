@@ -24,8 +24,10 @@ from nerajob.storage import (
 app = typer.Typer(help="NeraJob — scan jobs, build CV, prepare applications.", no_args_is_help=True)
 profile_app = typer.Typer(help="Manage your profile / CV source data.")
 jobs_app = typer.Typer(help="Inspect saved jobs.")
+skills_app = typer.Typer(help="Extract and inspect skill tokens from text.")
 app.add_typer(profile_app, name="profile")
 app.add_typer(jobs_app, name="jobs")
+app.add_typer(skills_app, name="skills")
 console = Console()
 
 
@@ -39,8 +41,8 @@ def version_cmd() -> None:
     console.print(f"NeraJob {__version__}")
 
 
-@app.command("skills")
-def skills_cmd() -> None:
+@skills_app.command("list")
+def skills_list() -> None:
     """List skill alias groups used by match scoring."""
     from nerajob.match import SKILL_ALIASES
 
@@ -50,6 +52,41 @@ def skills_cmd() -> None:
     for key, aliases in sorted(SKILL_ALIASES.items()):
         table.add_row(key, ", ".join(sorted(aliases)))
     console.print(table)
+
+
+@skills_app.command("extract")
+def skills_extract(
+    text_file: Path = typer.Option(
+        ..., "--text-file", "-f", exists=True, dir_okay=False, readable=True,
+        help="Path to a free-text resume/document to extract skills from"
+    ),
+) -> None:
+    """Extract skill tokens from a free-text file with alias expansion."""
+    from nerajob.match import SKILL_ALIASES
+
+    raw = text_file.read_text(encoding="utf-8", errors="replace").lower()
+    found: dict[str, set[str]] = {}
+
+    for group_key, aliases in sorted(SKILL_ALIASES.items()):
+        matched = {alias for alias in aliases if alias in raw}
+        if matched:
+            found[group_key] = matched
+
+    if not found:
+        console.print("[yellow]No recognized skill tokens found in the text.[/yellow]")
+        return
+
+    table = Table(title=f"Extracted skills from {text_file.name}")
+    table.add_column("Skill Group")
+    table.add_column("Matched Tokens")
+    table.add_column("Count")
+    for group_key in sorted(found):
+        tokens = found[group_key]
+        table.add_row(group_key, ", ".join(sorted(tokens)), str(len(tokens)))
+    console.print(table)
+
+    total_tokens = sum(len(v) for v in found.values())
+    console.print(f"[dim]{len(found)} skill groups, {total_tokens} token matches[/dim]")
 
 
 @app.command("gui")

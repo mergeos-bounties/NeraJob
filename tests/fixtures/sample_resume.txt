@@ -1,0 +1,6 @@
+Senior Software Engineer with 8 years of experience in Python, Django, FastAPI, and SQL databases.
+Strong background in DevOps practices using Docker, Kubernetes, and CI/CD pipelines.
+Experience with AWS cloud services (Lambda, S3) and JavaScript/React frontend work.
+Led product teams with Agile/Scrum methodologies. Worked on machine learning projects
+with PyTorch and TensorFlow. Some exposure to Rust and Go for performance-critical services.
+Familiar with Figma for UI/UX design collaboration and pytest for testing.
