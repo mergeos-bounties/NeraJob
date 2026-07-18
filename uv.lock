@@ -244,7 +244,7 @@ wheels = [
 
 [[package]]
 name = "nerajob"
-version = "0.2.56"
+version = "0.2.57"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
