@@ -377,6 +377,8 @@ NeraJob is built for **ethical, ToS-aware** job discovery:
 - Degrade gracefully on network failure (`[]` + optional sample fallback)
 - CI uses mocks — live smoke is optional and manual
 
+**Full policy:** [docs/ETHICAL_SCRAPING.md](docs/ETHICAL_SCRAPING.md) — covers principles, preferred official APIs, source-specific ToS notes, rate limit configuration, exponential backoff strategy, User-Agent standard, and a compliance checklist for new scrapers.
+
 Details: [docs/SOURCES.md § Compliance](docs/SOURCES.md#compliance).
 
 ---
