@@ -10,7 +10,8 @@
       "django",
       "postgresql"
     ],
-    "posted": "2026-07-10"
+    "posted": "2026-07-10",
+    "source": "fixture"
   },
   {
     "id": "job_02",
@@ -23,7 +24,8 @@
       "fastapi",
       "redis"
     ],
-    "posted": "2026-07-11"
+    "posted": "2026-07-11",
+    "source": "fixture"
   },
   {
     "id": "job_03",
@@ -36,7 +38,8 @@
       "spark",
       "airflow"
     ],
-    "posted": "2026-07-12"
+    "posted": "2026-07-12",
+    "source": "fixture"
   },
   {
     "id": "job_04",
@@ -49,7 +52,8 @@
       "pytorch",
       "transformers"
     ],
-    "posted": "2026-07-12"
+    "posted": "2026-07-12",
+    "source": "fixture"
   },
   {
     "id": "job_05",
@@ -62,7 +66,8 @@
       "react",
       "mongodb"
     ],
-    "posted": "2026-07-13"
+    "posted": "2026-07-13",
+    "source": "fixture"
   },
   {
     "id": "job_06",
@@ -75,7 +80,8 @@
       "docker",
       "kubernetes"
     ],
-    "posted": "2026-07-13"
+    "posted": "2026-07-13",
+    "source": "fixture"
   },
   {
     "id": "job_07",
@@ -88,7 +94,8 @@
       "selenium",
       "playwright"
     ],
-    "posted": "2026-07-14"
+    "posted": "2026-07-14",
+    "source": "fixture"
   },
   {
     "id": "job_08",
@@ -101,7 +108,8 @@
       "fastapi",
       "openapi"
     ],
-    "posted": "2026-07-14"
+    "posted": "2026-07-14",
+    "source": "fixture"
   },
   {
     "id": "job_09",
@@ -114,7 +122,8 @@
       "security",
       "penetration"
     ],
-    "posted": "2026-07-14"
+    "posted": "2026-07-14",
+    "source": "fixture"
   },
   {
     "id": "job_10",
@@ -127,6 +136,7 @@
       "training",
       "documentation"
     ],
-    "posted": "2026-07-14"
+    "posted": "2026-07-14",
+    "source": "fixture"
   }
 ]

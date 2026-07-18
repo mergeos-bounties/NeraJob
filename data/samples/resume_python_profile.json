@@ -1,0 +1,8 @@
+{
+  "full_name": "Alice Developer",
+  "email": "alice@example.com",
+  "location": "Remote",
+  "headline": "Python Backend Engineer",
+  "skills": ["Python", "FastAPI", "PostgreSQL", "Docker"],
+  "summary": "Backend engineer with 5 years experience building APIs."
+}

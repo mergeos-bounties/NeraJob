@@ -7,7 +7,7 @@ from rich.console import Console
 from rich.table import Table
 
 from nerajob import __version__
-from nerajob.match import SKILL_ALIASES, expand_skills, extract_skills_from_text
+from nerajob.match import SKILL_ALIASES, extract_skills_from_text
 from nerajob.apply.assistant import prepare_application
 from nerajob.cv.builder import write_cv_files
 from nerajob.match import DEFAULT_MATCH_WEIGHTS, MatchWeights
@@ -287,6 +287,22 @@ def jobs_export(
 def jobs_match(
     top: int = typer.Option(10, "--top", "-k", min=1, max=50),
     job_id: str | None = typer.Option(None, "--job-id", "-j"),
+    resume_file: Path | None = typer.Option(
+        None,
+        "--resume-file",
+        "-r",
+        exists=True,
+        readable=True,
+        help="Offline: profile JSON file (instead of stored profile)",
+    ),
+    jobs_file: Path | None = typer.Option(
+        None,
+        "--jobs-file",
+        "-f",
+        exists=True,
+        readable=True,
+        help="Offline: jobs JSON file (instead of stored jobs)",
+    ),
     skill_weight: float = typer.Option(
         DEFAULT_MATCH_WEIGHTS.skills,
         "--skill-weight",
@@ -308,16 +324,32 @@ def jobs_match(
 ) -> None:
     """Rank saved jobs against your profile (keyword skill match)."""
     from nerajob.match import match_score, rank_jobs
+    from nerajob.models import Profile, JobPosting
     from nerajob.storage import load_jobs, load_profile
 
-    profile = load_profile()
-    if not profile:
-        console.print("[red]No profile. Run: nerajob profile init[/red]")
-        raise typer.Exit(code=1)
-    jobs = load_jobs()
-    if not jobs:
-        console.print("[yellow]No jobs. Run: nerajob scan -q python[/yellow]")
-        raise typer.Exit()
+    profile = None
+    jobs: list[JobPosting] = []
+
+    if resume_file and jobs_file:
+        import json
+
+        profile_data = json.loads(resume_file.read_text(encoding="utf-8"))
+        profile = Profile(**profile_data)
+        jobs_data = json.loads(jobs_file.read_text(encoding="utf-8"))
+        jobs = [JobPosting(**j) for j in jobs_data]
+        console.print(
+            f"[dim]Offline match: {len(jobs)} jobs × {len(profile.skills or [])} skills[/dim]"
+        )
+    else:
+        profile = load_profile()
+        if not profile:
+            console.print("[red]No profile. Run: nerajob profile init[/red]")
+            raise typer.Exit(code=1)
+        jobs = load_jobs()
+        if not jobs:
+            console.print("[yellow]No jobs. Run: nerajob scan -q python[/yellow]")
+            raise typer.Exit()
+
     weights = MatchWeights(
         skills=skill_weight,
         title=title_weight,
