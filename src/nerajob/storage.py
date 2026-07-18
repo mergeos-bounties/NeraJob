@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 from typing import Iterable
 
-from nerajob.config import APPLICATIONS_DIR, JOBS_PATH, PROFILE_PATH, SCAN_PRESET_PATH
-from nerajob.models import ApplicationPackage, Education, Experience, JobPosting, Profile, ScanPreset
+from nerajob.config import APPLICATIONS_DIR, JOBS_PATH, PROFILE_PATH
+from nerajob.models import ApplicationPackage, Education, Experience, JobPosting, Profile, utc_now_iso
 
 
 def _read_json(path: Path, default):
@@ -93,6 +93,35 @@ def save_scan_preset(preset: ScanPreset) -> Path:
 
 def save_application(package: ApplicationPackage) -> Path:
     APPLICATIONS_DIR.mkdir(parents=True, exist_ok=True)
+    package.updated_at = utc_now_iso()
     path = APPLICATIONS_DIR / f"{package.job_id}.json"
     _write_json(path, package.model_dump())
     return path
+
+
+def load_application(job_id: str) -> ApplicationPackage | None:
+    path = APPLICATIONS_DIR / f"{job_id}.json"
+    if not path.exists():
+        return None
+    return ApplicationPackage.model_validate(_read_json(path, {}))
+
+
+def load_applications() -> list[ApplicationPackage]:
+    if not APPLICATIONS_DIR.exists():
+        return []
+    packages = []
+    for child in sorted(APPLICATIONS_DIR.iterdir()):
+        if child.suffix == ".json":
+            data = _read_json(child, {})
+            if data:
+                packages.append(ApplicationPackage.model_validate(data))
+    return packages
+
+
+def update_application_status(job_id: str, new_status: str) -> ApplicationPackage | None:
+    package = load_application(job_id)
+    if not package:
+        return None
+    package.set_status(new_status)
+    save_application(package)
+    return package

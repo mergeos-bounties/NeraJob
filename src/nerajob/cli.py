@@ -13,22 +13,26 @@ from nerajob.cv.builder import write_cv_files
 from nerajob.match import DEFAULT_MATCH_WEIGHTS, MatchWeights
 from nerajob.models import JobPosting
 from nerajob.scrapers.registry import available_scrapers, get_scraper
+from nerajob.models import ApplicationPackage
 from nerajob.storage import (
     default_profile,
     get_job,
+    load_applications,
     load_jobs,
     load_profile,
     load_scan_preset,
     save_profile,
-    save_scan_preset,
+    update_application_status,
     upsert_jobs,
 )
 
 app = typer.Typer(help="NeraJob — scan jobs, build CV, prepare applications.", no_args_is_help=True)
 profile_app = typer.Typer(help="Manage your profile / CV source data.")
 jobs_app = typer.Typer(help="Inspect saved jobs.")
+app_app = typer.Typer(help="Track application statuses.")
 app.add_typer(profile_app, name="profile")
 app.add_typer(jobs_app, name="jobs")
+app.add_typer(app_app, name="app")
 console = Console()
 
 
@@ -463,6 +467,82 @@ def jobs_match(
             ", ".join(row["skill_hits"][:5]),
         )
     console.print(table)
+
+
+@app_app.command("list")
+def app_list() -> None:
+    """List all applications with status, job_id, created_at."""
+    packages = load_applications()
+    if not packages:
+        console.print("[yellow]No applications yet. Run: nerajob apply --job-id <id>[/yellow]")
+        raise typer.Exit()
+    table = Table(title=f"Applications ({len(packages)})")
+    table.add_column("Job ID")
+    table.add_column("Status")
+    table.add_column("Created")
+    table.add_column("Updated")
+    for pkg in packages:
+        table.add_row(pkg.job_id, pkg.status, pkg.created_at, pkg.updated_at)
+    console.print(table)
+
+
+@app_app.command("show")
+def app_show(
+    job_id: str = typer.Argument(..., help="Job ID to show application details for"),
+) -> None:
+    """Show application details."""
+    from nerajob.storage import load_application
+
+    pkg = load_application(job_id)
+    if not pkg:
+        console.print(f"[red]No application found for job id:[/red] {job_id}")
+        raise typer.Exit(code=1)
+    console.print_json(pkg.model_dump_json(indent=2))
+
+
+@app_app.command("status")
+def app_status(
+    job_id: str = typer.Argument(..., help="Job ID"),
+    status_value: str | None = typer.Option(
+        None,
+        "--set",
+        help=f"Set status: {sorted(ApplicationPackage.VALID_STATUSES)}",
+    ),
+) -> None:
+    """Get or update application status."""
+    from nerajob.storage import load_application
+
+    pkg = load_application(job_id)
+    if not pkg:
+        console.print(f"[red]No application found for job id:[/red] {job_id}")
+        raise typer.Exit(code=1)
+    if status_value:
+        try:
+            pkg.set_status(status_value)
+            from nerajob.storage import save_application
+
+            save_application(pkg)
+        except ValueError as e:
+            console.print(f"[red]{e}[/red]")
+            raise typer.Exit(code=1)
+        console.print(f"[green]Status updated:[/green] {pkg.job_id} → {pkg.status}")
+    else:
+        console.print(f"{pkg.job_id}: {pkg.status}")
+
+
+@app_app.command("stats")
+def app_stats() -> None:
+    """Show summary of application statuses."""
+    packages = load_applications()
+    if not packages:
+        console.print("[yellow]No applications yet.[/yellow]")
+        raise typer.Exit()
+    counts: dict[str, int] = {}
+    for pkg in packages:
+        counts[pkg.status] = counts.get(pkg.status, 0) + 1
+    parts = [f"{count} {status}" for status, count in sorted(counts.items())]
+    console.print("Application summary:")
+    console.print(", ".join(parts))
 
 
 if __name__ == "__main__":
