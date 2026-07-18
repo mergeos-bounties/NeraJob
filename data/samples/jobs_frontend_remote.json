@@ -5,8 +5,13 @@
     "company": "WebCo",
     "location": "Remote",
     "salary": "$100k-$140k",
-    "tags": ["react", "typescript", "next.js"],
-    "posted": "2026-07-15"
+    "tags": [
+      "react",
+      "typescript",
+      "next.js"
+    ],
+    "posted": "2026-07-15",
+    "source": "fixture"
   },
   {
     "id": "fe_02",
@@ -14,8 +19,13 @@
     "company": "AppStudio",
     "location": "Remote",
     "salary": "$80k-$120k",
-    "tags": ["vue", "javascript", "tailwind"],
-    "posted": "2026-07-14"
+    "tags": [
+      "vue",
+      "javascript",
+      "tailwind"
+    ],
+    "posted": "2026-07-14",
+    "source": "fixture"
   },
   {
     "id": "fe_03",
@@ -23,8 +33,14 @@
     "company": "DesignTech",
     "location": "Remote",
     "salary": "$90k-$130k",
-    "tags": ["react", "figma", "css", "storybook"],
-    "posted": "2026-07-13"
+    "tags": [
+      "react",
+      "figma",
+      "css",
+      "storybook"
+    ],
+    "posted": "2026-07-13",
+    "source": "fixture"
   },
   {
     "id": "fe_04",
@@ -32,8 +48,14 @@
     "company": "ScaleUp",
     "location": "Remote",
     "salary": "$120k-$160k",
-    "tags": ["typescript", "react", "graphql", "jest"],
-    "posted": "2026-07-12"
+    "tags": [
+      "typescript",
+      "react",
+      "graphql",
+      "jest"
+    ],
+    "posted": "2026-07-12",
+    "source": "fixture"
   },
   {
     "id": "fe_05",
@@ -41,8 +63,13 @@
     "company": "EnterpriseSoft",
     "location": "Remote",
     "salary": "$85k-$125k",
-    "tags": ["angular", "typescript", "rxjs"],
-    "posted": "2026-07-11"
+    "tags": [
+      "angular",
+      "typescript",
+      "rxjs"
+    ],
+    "posted": "2026-07-11",
+    "source": "fixture"
   },
   {
     "id": "fe_06",
@@ -50,8 +77,13 @@
     "company": "StartupFresh",
     "location": "Remote",
     "salary": "$70k-$100k",
-    "tags": ["svelte", "javascript", "vite"],
-    "posted": "2026-07-10"
+    "tags": [
+      "svelte",
+      "javascript",
+      "vite"
+    ],
+    "posted": "2026-07-10",
+    "source": "fixture"
   },
   {
     "id": "fe_07",
@@ -59,8 +91,13 @@
     "company": "PWAgency",
     "location": "Remote",
     "salary": "$75k-$110k",
-    "tags": ["react native", "typescript", "pwa"],
-    "posted": "2026-07-09"
+    "tags": [
+      "react native",
+      "typescript",
+      "pwa"
+    ],
+    "posted": "2026-07-09",
+    "source": "fixture"
   },
   {
     "id": "fe_08",
@@ -68,7 +105,13 @@
     "company": "InclusiveTech",
     "location": "Remote",
     "salary": "$95k-$135k",
-    "tags": ["react", "a11y", "wcag", "axe"],
-    "posted": "2026-07-08"
+    "tags": [
+      "react",
+      "a11y",
+      "wcag",
+      "axe"
+    ],
+    "posted": "2026-07-08",
+    "source": "fixture"
   }
 ]
