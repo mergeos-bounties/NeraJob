@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import typer
@@ -49,6 +50,96 @@ def skills_cmd() -> None:
     for key, aliases in sorted(SKILL_ALIASES.items()):
         table.add_row(key, ", ".join(sorted(aliases)))
     console.print(table)
+
+
+skills_cli = typer.Typer(help="Skills extraction and analysis.")
+app.add_typer(skills_cli, name="skills-extract" if False else "skills-extract", hidden=True)
+
+
+@skills_cli.command("extract", help="Extract skills from free-text resume via alias expansion.")
+def skills_extract_cmd(
+    text_file: Path = typer.Option(..., "--text-file", "-f", help="Path to free-text resume (Markdown or plain text)"),
+    expand: bool = typer.Option(True, "--expand/--no-expand", help="Apply alias expansion (default: enabled)"),
+    unique: bool = typer.Option(True, "--unique", help="Return only canonical skill names (no aliases)"),
+) -> None:
+    """
+    Extract skills from free-text resume (Markdown or plain text) with alias expansion.
+
+    Example:
+        nerajob skills extract --text-file resume.txt
+        nerajob skills extract -f resume.md --no-expand
+    """
+    from nerajob.match import SKILL_ALIASES, expand_skills
+
+    if not text_file.exists():
+        console.print(f"[red]File not found:[/red] {text_file}")
+        raise typer.Exit(code=1)
+
+    raw_text = text_file.read_text(encoding="utf-8", errors="replace").lower()
+
+    # Build a combined set of all known skill tokens (both keys and aliases)
+    known_tokens: set[str] = set()
+    for key, aliases in SKILL_ALIASES.items():
+        known_tokens.add(key)
+        known_tokens.add(key.replace("_", " "))
+        for alias in aliases:
+            known_tokens.add(alias)
+
+    # Sort by length descending so longer phrases match first
+    all_tokens = sorted(known_tokens, key=len, reverse=True)
+
+    # Multi-word token matching using word boundary regex
+    found_canonical: set[str] = set()
+    found_expanded: set[str] = set()
+
+    for token in all_tokens:
+        # Match whole-word or hyphenated token
+        pattern = r"\b" + re.escape(token) + r"\b"
+        if re.search(pattern, raw_text):
+            # Find the canonical key for this token
+            canonical = token
+            for key, aliases in SKILL_ALIASES.items():
+                if token == key or token in aliases or key.replace("_", " ") == token:
+                    canonical = key
+                    break
+            found_canonical.add(canonical)
+
+    # Apply alias expansion if requested
+    if expand:
+        found_expanded = expand_skills(found_canonical)
+        skills_out = found_expanded
+    else:
+        skills_out = found_canonical
+
+    # Show results
+    console.print(f"[dim]Scanned:[/dim] {text_file}")
+    console.print(f"[dim]Canonical skills found:[/dim] {len(found_canonical)}")
+    if expand:
+        console.print(f"[dim]Expanded skills (with aliases):[/dim] {len(skills_out)}")
+
+    if not skills_out:
+        console.print("[yellow]No skills detected. Try --no-expand to see raw matches.[/yellow]")
+        raise typer.Exit()
+
+    # Output format — rich table + JSON option
+    table = Table(title="Extracted Skills")
+    table.add_column("Canonical", style="cyan")
+    if expand:
+        table.add_column("Expanded aliases", style="dim")
+    for canon in sorted(found_canonical):
+        aliases = sorted(SKILL_ALIASES.get(canon, set()) - {canon})
+        alias_str = ", ".join(aliases) if aliases else "—"
+        if expand:
+            expanded_set = sorted(expand_skills({canon}))
+            exp_str = ", ".join(expanded_set)
+            table.add_row(canon, exp_str)
+        else:
+            table.add_row(canon, alias_str)
+
+    console.print(table)
+    console.print(f"\n[green]Skill tokens[/green] (for profile.skills):")
+    for s in sorted(skills_out):
+        console.print(f"  - {s}")
 
 
 @app.command("gui")
