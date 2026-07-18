@@ -30,6 +30,10 @@ dev = [
 gui = [
   "PySide6>=6.6",
 ]
+pdf = [
+  "weasyprint>=62",
+  "fpdf2>=2.7",
+]
 
 [project.scripts]
 nerajob = "nerajob.cli:app"
