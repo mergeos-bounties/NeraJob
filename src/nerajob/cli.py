@@ -7,6 +7,7 @@ from rich.console import Console
 from rich.table import Table
 
 from nerajob import __version__
+from nerajob.match import SKILL_ALIASES, expand_skills, extract_skills_from_text
 from nerajob.apply.assistant import prepare_application
 from nerajob.cv.builder import write_cv_files
 from nerajob.match import DEFAULT_MATCH_WEIGHTS, MatchWeights
@@ -40,9 +41,31 @@ def version_cmd() -> None:
 
 
 @app.command("skills")
-def skills_cmd() -> None:
-    """List skill alias groups used by match scoring."""
-    from nerajob.match import SKILL_ALIASES
+def skills_cmd(
+    text_file: Path | None = typer.Option(
+        None,
+        "--text-file",
+        "-f",
+        exists=True,
+        readable=True,
+        help="Extract skills from a plain-text resume file",
+    ),
+) -> None:
+    """List skill alias groups or extract skills from a text file."""
+    if text_file:
+        text = text_file.read_text(encoding="utf-8")
+        matched = extract_skills_from_text(text)
+        if not matched:
+            console.print("[yellow]No recognized skills found in text.[/yellow]")
+            raise typer.Exit()
+        total = sum(len(skills) for skills in matched.values())
+        table = Table(title=f"Skills extracted ({total} matches in {len(matched)} domains)")
+        table.add_column("Domain")
+        table.add_column("Matched skills")
+        for domain in sorted(matched):
+            table.add_row(domain, ", ".join(sorted(matched[domain])))
+        console.print(table)
+        return
 
     table = Table(title=f"Skill aliases ({len(SKILL_ALIASES)})")
     table.add_column("Group")

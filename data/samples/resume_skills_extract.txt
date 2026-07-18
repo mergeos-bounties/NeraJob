@@ -1,0 +1,23 @@
+Senior Full-Stack Developer
+Remote · san@example.com
+
+Skills
+Python, Django, FastAPI, JavaScript, React, TypeScript, PostgreSQL,
+Docker, Kubernetes, AWS, Terraform, CI/CD, Git
+
+Experience
+Senior Backend Engineer — TechCorp (2021–Present)
+- Built REST APIs with Django and FastAPI serving 10M+ requests/day
+- Migrated monolith to microservices on Kubernetes
+- Implemented CI/CD pipelines with GitHub Actions
+
+Full-Stack Developer — StartupX (2019–2021)
+- Developed React frontend with TypeScript
+- Managed PostgreSQL databases and wrote complex queries
+- Deployed infrastructure on AWS using Terraform
+
+Education
+B.S. Computer Science — University of Technology
+
+Languages
+English (Native), Vietnamese (Native)
