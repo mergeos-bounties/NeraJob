@@ -86,6 +86,26 @@ SKILL_ALIASES: dict[str, set[str]] = {
 }
 
 
+def extract_skills_from_text(text: str) -> dict[str, set[str]]:
+    """
+    Parse free-form text and extract known skill tokens matched against SKILL_ALIASES.
+
+    Returns a mapping of domain → matched skill tokens found in the text.
+    """
+    import re
+
+    normalized = text.lower()
+    result: dict[str, set[str]] = {}
+    for domain, aliases in SKILL_ALIASES.items():
+        matched: set[str] = set()
+        for alias in aliases:
+            if alias in normalized:
+                matched.add(alias)
+        if matched:
+            result[domain] = matched
+    return result
+
+
 def _coerce_weights(weights: MatchWeights | dict[str, float] | None) -> MatchWeights:
     if weights is None:
         return DEFAULT_MATCH_WEIGHTS
