@@ -5,14 +5,8 @@
     "company": "CloudScale",
     "location": "Remote",
     "salary": "$110k-$150k",
-    "tags": [
-      "kubernetes",
-      "terraform",
-      "aws",
-      "ci/cd"
-    ],
-    "posted": "2026-07-15",
-    "source": "fixture"
+    "tags": ["kubernetes", "terraform", "aws", "ci/cd"],
+    "posted": "2026-07-15"
   },
   {
     "id": "devops_02",
@@ -20,14 +14,8 @@
     "company": "InfraCo",
     "location": "Remote",
     "salary": "$100k-$140k",
-    "tags": [
-      "kubernetes",
-      "docker",
-      "helm",
-      "istio"
-    ],
-    "posted": "2026-07-14",
-    "source": "fixture"
+    "tags": ["kubernetes", "docker", "helm", "istio"],
+    "posted": "2026-07-14"
   },
   {
     "id": "devops_03",
@@ -35,14 +23,8 @@
     "company": "ReliableOps",
     "location": "Remote",
     "salary": "$120k-$160k",
-    "tags": [
-      "sre",
-      "prometheus",
-      "grafana",
-      "terraform"
-    ],
-    "posted": "2026-07-13",
-    "source": "fixture"
+    "tags": ["sre", "prometheus", "grafana", "terraform"],
+    "posted": "2026-07-13"
   },
   {
     "id": "devops_04",
@@ -50,14 +32,8 @@
     "company": "AWSFirst",
     "location": "Remote",
     "salary": "$95k-$135k",
-    "tags": [
-      "aws",
-      "terraform",
-      "ansible",
-      "python"
-    ],
-    "posted": "2026-07-12",
-    "source": "fixture"
+    "tags": ["aws", "terraform", "ansible", "python"],
+    "posted": "2026-07-12"
   },
   {
     "id": "devops_05",
@@ -65,14 +41,8 @@
     "company": "PipelinePro",
     "location": "Remote",
     "salary": "$85k-$125k",
-    "tags": [
-      "jenkins",
-      "github actions",
-      "gitlab ci",
-      "docker"
-    ],
-    "posted": "2026-07-11",
-    "source": "fixture"
+    "tags": ["jenkins", "github actions", "gitlab ci", "docker"],
+    "posted": "2026-07-11"
   },
   {
     "id": "devops_06",
@@ -80,14 +50,8 @@
     "company": "SecurePipe",
     "location": "Remote",
     "salary": "$115k-$155k",
-    "tags": [
-      "devsecops",
-      "vault",
-      "terraform",
-      "kubernetes"
-    ],
-    "posted": "2026-07-10",
-    "source": "fixture"
+    "tags": ["devsecops", "vault", "terraform", "kubernetes"],
+    "posted": "2026-07-10"
   },
   {
     "id": "devops_07",
@@ -95,14 +59,8 @@
     "company": "IaCFirst",
     "location": "Remote",
     "salary": "$90k-$130k",
-    "tags": [
-      "terraform",
-      "pulumi",
-      "cloudformation",
-      "ansible"
-    ],
-    "posted": "2026-07-09",
-    "source": "fixture"
+    "tags": ["terraform", "pulumi", "cloudformation", "ansible"],
+    "posted": "2026-07-09"
   },
   {
     "id": "devops_08",
@@ -110,13 +68,7 @@
     "company": "DataDogInc",
     "location": "Remote",
     "salary": "$105k-$145k",
-    "tags": [
-      "prometheus",
-      "grafana",
-      "datadog",
-      "opentelemetry"
-    ],
-    "posted": "2026-07-08",
-    "source": "fixture"
+    "tags": ["prometheus", "grafana", "datadog", "opentelemetry"],
+    "posted": "2026-07-08"
   }
 ]
