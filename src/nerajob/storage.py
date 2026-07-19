@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 from typing import Iterable
 
-from nerajob.config import APPLICATIONS_DIR, JOBS_PATH, PROFILE_PATH
-from nerajob.models import ApplicationPackage, Education, Experience, JobPosting, Profile, utc_now_iso
+from nerajob.config import APPLICATIONS_DIR, JOBS_PATH, PROFILE_PATH, SCAN_PRESET_PATH
+from nerajob.models import ApplicationPackage, Education, Experience, JobPosting, Profile, ScanPreset, utc_now_iso
 
 
 def _read_json(path: Path, default):
