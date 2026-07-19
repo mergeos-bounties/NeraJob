@@ -19,7 +19,7 @@ from nerajob.storage import (
     load_applications,
     load_jobs,
     load_profile,
-    load_scan_preset,
+    load_scan_preset, save_scan_preset,
     save_profile,
     upsert_jobs,
 )
