@@ -1,5 +1,5 @@
 # Your Name
-**Python Backend**  
+**Test**  
 Remote · you@example.com
 
 https://github.com/your-handle · https://linkedin.com/in/your-handle
@@ -23,4 +23,4 @@ Python, APIs, SQL
 English
 
 ## Target role notes
-Tailored for **Python Backend**. Emphasize overlapping skills and impact metrics before sending.
+Tailored for **Test**. Emphasize overlapping skills and impact metrics before sending.
