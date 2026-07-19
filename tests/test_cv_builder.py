@@ -1,4 +1,3 @@
-from pathlib import Path
 
 from nerajob.cv.builder import build_cv_markdown, write_cv_files, write_cv_pdf
 from nerajob.storage import default_profile
