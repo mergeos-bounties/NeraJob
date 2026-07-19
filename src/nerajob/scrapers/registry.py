@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 
+from nerajob.scrapers.adzuna import AdzunaScraper
 from nerajob.scrapers.arbeitnow import ArbeitnowScraper
 from nerajob.scrapers.ashby import AshbyScraper
 from nerajob.scrapers.base import BaseScraper
@@ -34,6 +35,9 @@ def available_scrapers() -> dict[str, BaseScraper]:
     Findwork: live public API; set NERAJOB_FINDWORK_API_TOKEN env var to use live mode.
               Without token, returns deterministic offline fixtures.
               Set NERAJOB_FINDWORK_OFFLINE=1 to force offline even with token.
+    Adzuna: live public API; set ADZUNA_APP_ID + ADZUNA_APP_KEY env vars.
+            Without credentials, returns deterministic offline fixtures.
+            Set NERAJOB_ADZUNA_OFFLINE=1 to force offline even with credentials.
     """
     scrapers: list[BaseScraper] = [
         SampleScraper(),
@@ -48,6 +52,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
         AshbyScraper(board_id=os.getenv("NERAJOB_ASHBY_BOARD") or None),
         SmartRecruitersScraper(),
         FindworkScraper(),
+        AdzunaScraper(),
     ]
     return {s.name: s for s in scrapers}
 
