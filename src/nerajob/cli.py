@@ -210,6 +210,12 @@ def scan_cmd(
 
     if skill_filters:
         filter_skills = [s.strip().lower() for s in skill_filters.split(",") if s.strip()]
+        collected = [
+            j
+            for j in collected
+            if any(sk in (j.description or "").lower() or sk in (j.title or "").lower() for sk in filter_skills)
+        ]
+        console.print(f"[dim]skill-filter[/dim] {len(collected)} jobs")split(",") if s.strip()]
         before_s = len(collected)
         scored = []
         for job in collected:
