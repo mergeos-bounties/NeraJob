@@ -45,7 +45,7 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "rust": {"rust", "cargo", "tokio", "actix", "axum"},
     "go": {"go", "golang", "gin", "fiber"},
     "sql": {"sql", "postgres", "postgresql", "mysql", "sqlite", "database"},
-    "cloud": {"cloud", "aws", "gcp", "azure", "s3", "lambda", "azure-devops", "gke", "eks", "ecs", "cloudformation", "serverless", "cdn", "vpc", "cloudwatch", "cloud functions", "azure functions", "google cloud", "google cloud platform", "aws lambda", "azure devops", "pulumi", "crossplane", "ec2", "cloudrun", "cloudfunctions", "cdk", "route53", "cloudfront", "iam", "cloudtrail", "aks"},
+    "cloud": {"cloud", "aws", "gcp", "azure", "s3", "lambda", "azure-devops", "gke", "eks", "ecs", "cloudformation", "serverless", "cdn", "vpc", "cloudwatch", "cloud functions", "azure functions", "google cloud", "google cloud platform", "aws lambda", "azure devops", "pulumi", "crossplane", "ec2", "cloudrun", "cloudfunctions", "cdk", "route53", "cloudfront", "iam", "cloudtrail", "aks", "terraform", "helm", "ansible", "istio", "consul", "nomad", "vault", "argocd", "jenkins", "github actions", "gitlab ci", "prometheus", "grafana", "site reliability", "infrastructure as code", "iac", "service mesh"},
     "java": {"java", "spring", "kotlin", "jvm", "maven", "gradle"},
     "mobile": {"mobile", "android", "ios", "flutter", "react native", "swift", "kotlin", "xamarin", "maui", "capacitor", "cordova", "jetpack compose", "ndk", "coreml", "arkit", "arcore", "xcode", "android studio", "mobile dev", "mobile development", "native app", "hybrid app", "pwa", "progressive web app", "app store optimization", "aso", "objc", "objective-c", "swiftui", "ionic", "app store", "play store", "expo"},
     "security": {"security", "infosec", "appsec", "owasp", "penetration testing", "pentest"},
@@ -82,7 +82,7 @@ SKILL_ALIASES: dict[str, set[str]] = {
     "game": {"game", "gamedev", "unity", "unreal", "godot", "game design"},
     "support": {"support", "customer support", "helpdesk", "zendesk", "intercom", "cs"},
     "sales": {"sales", "account executive", "sdr", "bdr", "crm", "salesforce"},
-    "finance": {"finance", "accounting", "fintech", "cpa", "bookkeeping", "fp&a", "payments", "payment processing", "ledger", "kyc", "know your customer", "aml", "anti money laundering", "risk management", "quant", "quantitative analysis", "trading", "algorithmic trading", "blockchain finance", "defi", "banking api", "payment gateway", "stripe", "paypal", "square", "plaid", "wealth management", "robo advisor", "insurance tech", "insurtech", "regtech", "compliance tech", "financial modeling", "valuation", "portfolio management", "asset management", "cryptocurrency trading", "forex", "fx trading", "settlement", "clearing", "underwriting", "treasury", "swift", "iso20022", "bloomberg", "reconciliation"},
+    "finance": {"finance", "accounting", "fintech", "cpa", "bookkeeping", "fp&a", "payments", "payment processing", "ledger", "kyc", "know your customer", "aml", "anti money laundering", "risk", "risk management", "quant", "quantitative analysis", "quantitative", "trading", "algorithmic trading", "blockchain finance", "defi", "banking api", "payment gateway", "stripe", "paypal", "square", "plaid", "wealth management", "robo advisor", "insurance tech", "insurtech", "regtech", "compliance tech", "financial modeling", "valuation", "portfolio management", "asset management", "cryptocurrency trading", "forex", "fx trading", "settlement", "clearing", "underwriting", "treasury", "swift", "iso20022", "bloomberg", "reconciliation"},
 }
 
 

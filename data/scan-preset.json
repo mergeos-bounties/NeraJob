@@ -1,0 +1,9 @@
+{
+  "remote_only": true,
+  "skill_filters": [
+    "python"
+  ],
+  "min_score": 30.0,
+  "min_salary": 0,
+  "max_results": 20
+}
