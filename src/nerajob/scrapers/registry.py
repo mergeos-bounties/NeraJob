@@ -12,6 +12,7 @@ from nerajob.scrapers.remotive import RemotiveScraper
 from nerajob.scrapers.sample import SampleScraper
 from nerajob.scrapers.smartrecruiters import SmartRecruitersScraper
 from nerajob.scrapers.themuse import TheMuseScraper
+from nerajob.scrapers.adzuna import AdzunaScraper
 from nerajob.scrapers.weworkremotely import WeWorkRemotelyScraper
 
 
@@ -41,6 +42,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
         LeverScraper(board_name=os.getenv("NERAJOB_LEVER_BOARD") or None),
         AshbyScraper(board_id=os.getenv("NERAJOB_ASHBY_BOARD") or None),
         SmartRecruitersScraper(),
+        AdzunaScraper(country=os.getenv("NERAJOB_ADZUNA_COUNTRY", "us")),
     ]
     return {s.name: s for s in scrapers}
 
