@@ -32,11 +32,6 @@ app.add_typer(jobs_app, name="jobs")
 console = Console()
 
 
-@app.callback()
-def main() -> None:
-    """NeraJob CLI."""
-
-
 @app.command("version")
 def version_cmd() -> None:
     console.print(f"NeraJob {__version__}")
@@ -321,7 +316,7 @@ def apply_cmd(
         raise typer.Exit(code=1)
     package, path = prepare_application(profile, job)
     console.print(f"[green]Application package saved:[/green] {path}")
-    console.print(f"Cover note preview:\n\n{package.cover_note[:500]}…")
+    console.print(f"Cover note preview:\\n\\n{package.cover_note[:500]}…")
 
 
 @jobs_app.command("export")
