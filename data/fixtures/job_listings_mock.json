@@ -1,0 +1,7 @@
+{
+  "mock": true,
+  "jobs": [
+    {"title": "Software Engineer", "company": "Tech Corp"},
+    {"title": "Data Analyst", "company": "Data Inc"}
+  ]
+}
