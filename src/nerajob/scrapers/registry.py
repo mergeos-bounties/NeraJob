@@ -7,6 +7,7 @@ from nerajob.scrapers.arbeitnow import ArbeitnowScraper
 from nerajob.scrapers.ashby import AshbyScraper
 from nerajob.scrapers.base import BaseScraper
 from nerajob.scrapers.findwork import FindworkScraper
+from nerajob.scrapers.himalayas import HimalayasScraper
 from nerajob.scrapers.jobicy import JobicyScraper
 from nerajob.scrapers.jooble import JoobleScraper
 from nerajob.scrapers.lever import LeverScraper
@@ -38,6 +39,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
     Adzuna: live public API; set ADZUNA_APP_ID + ADZUNA_APP_KEY env vars.
             Without credentials, returns deterministic offline fixtures.
             Set NERAJOB_ADZUNA_OFFLINE=1 to force offline even with credentials.
+    Himalayas: live public API; set NERAJOB_HIMALAYAS_OFFLINE=1 to force offline samples.
     """
     scrapers: list[BaseScraper] = [
         SampleScraper(),
@@ -52,6 +54,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
         AshbyScraper(board_id=os.getenv("NERAJOB_ASHBY_BOARD") or None),
         SmartRecruitersScraper(),
         FindworkScraper(),
+        HimalayasScraper(),
         AdzunaScraper(),
     ]
     return {s.name: s for s in scrapers}
