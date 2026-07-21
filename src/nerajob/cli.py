@@ -467,6 +467,94 @@ def jobs_match(
     console.print(table)
 
 
+@app.command("match")
+def match_cmd(
+    top: int = typer.Option(10, "--top", "-k", min=1, max=50),
+    job_id: str | None = typer.Option(None, "--job-id", "-j"),
+    resume_file: Path | None = typer.Option(
+        None,
+        "--resume-file",
+        "-r",
+        exists=True,
+        readable=True,
+        help="Offline: profile JSON file (instead of stored profile)",
+    ),
+    jobs_file: Path | None = typer.Option(
+        None,
+        "--jobs-file",
+        "-f",
+        exists=True,
+        readable=True,
+        help="Offline: jobs JSON file (instead of stored jobs)",
+    ),
+    skill_weight: float = typer.Option(
+        DEFAULT_MATCH_WEIGHTS.skills,
+        "--skill-weight",
+        min=0.0,
+        help="Maximum score contribution from profile skill matches",
+    ),
+    title_weight: float = typer.Option(
+        DEFAULT_MATCH_WEIGHTS.title,
+        "--title-weight",
+        min=0.0,
+        help="Maximum score contribution from headline/title overlap",
+    ),
+    location_weight: float = typer.Option(
+        DEFAULT_MATCH_WEIGHTS.location,
+        "--location-weight",
+        min=0.0,
+        help="Maximum score contribution from location or remote fit",
+    ),
+) -> None:
+    """Rank jobs against a profile, including offline resume/jobs files."""
+    import json
+
+    from nerajob.match import match_score, rank_jobs
+    from nerajob.models import Profile
+
+    if not resume_file or not jobs_file:
+        console.print(
+            "[red]Offline files are required.[/red] Run: nerajob match --resume-file data/samples/resume_match_demo.json --jobs-file data/samples/jobs_match_demo.json"
+        )
+        raise typer.Exit(code=1)
+
+    profile_data = json.loads(resume_file.read_text(encoding="utf-8"))
+    profile = Profile(**profile_data)
+    jobs_data = json.loads(jobs_file.read_text(encoding="utf-8"))
+    jobs = [JobPosting(**j) for j in jobs_data]
+    console.print(f"[dim]Offline match: {len(jobs)} jobs x {len(profile.skills or [])} skills[/dim]")
+
+    weights = MatchWeights(
+        skills=skill_weight,
+        title=title_weight,
+        location=location_weight,
+    )
+    if job_id:
+        job = next((j for j in jobs if j.id == job_id), None)
+        if not job:
+            console.print(f"[red]Unknown job id:[/red] {job_id}")
+            raise typer.Exit(1)
+        console.print_json(data=match_score(profile, job, weights=weights))
+        return
+
+    ranked = rank_jobs(profile, jobs, top_k=top, weights=weights)
+    table = Table(title=f"Job matches (top {len(ranked)})")
+    table.add_column("Score")
+    table.add_column("Band")
+    table.add_column("Title")
+    table.add_column("Company")
+    table.add_column("Hits")
+    for row in ranked:
+        table.add_row(
+            str(row["score"]),
+            str(row["band"]),
+            str(row["title"])[:40],
+            str(row["company"])[:24],
+            ", ".join(row["skill_hits"][:5]),
+        )
+    console.print(table)
+
+
 @app_app.command("list")
 def app_list() -> None:
     """List all applications with status, job_id, created_at."""

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "match-demo-1",
+    "source": "fixture",
+    "title": "Senior Python Backend Engineer",
+    "company": "Remote APIs Co",
+    "location": "Remote",
+    "url": "https://example.com/jobs/python-backend",
+    "description": "Build FastAPI services backed by PostgreSQL and Docker-based delivery.",
+    "tags": ["python", "fastapi", "postgresql", "docker"],
+    "salary": "$110k-$145k",
+    "remote": true
+  },
+  {
+    "id": "match-demo-2",
+    "source": "fixture",
+    "title": "Frontend Product Engineer",
+    "company": "Web Studio",
+    "location": "Remote",
+    "url": "https://example.com/jobs/frontend-product",
+    "description": "Build customer-facing React and TypeScript interfaces.",
+    "tags": ["react", "typescript", "css"],
+    "salary": "$90k-$125k",
+    "remote": true
+  },
+  {
+    "id": "match-demo-3",
+    "source": "fixture",
+    "title": "Data Platform Engineer",
+    "company": "Data Flow Labs",
+    "location": "Hybrid",
+    "url": "https://example.com/jobs/data-platform",
+    "description": "Operate data pipelines with Python, SQL, Airflow, and cloud infrastructure.",
+    "tags": ["python", "sql", "airflow", "cloud"],
+    "salary": "$120k-$150k",
+    "remote": false
+  }
+]
