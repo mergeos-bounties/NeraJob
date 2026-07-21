@@ -11,6 +11,7 @@ from nerajob.scrapers.jobicy import JobicyScraper
 from nerajob.scrapers.jooble import JoobleScraper
 from nerajob.scrapers.lever import LeverScraper
 from nerajob.scrapers.remoteok import RemoteOKScraper
+from nerajob.scrapers.himalayas import HimalayasScraper
 from nerajob.scrapers.remotive import RemotiveScraper
 from nerajob.scrapers.sample import SampleScraper
 from nerajob.scrapers.smartrecruiters import SmartRecruitersScraper
@@ -43,6 +44,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
         SampleScraper(),
         RemoteOKScraper(),
         RemotiveScraper(),
+    HimalayasScraper(),
         ArbeitnowScraper(),
         JobicyScraper(),
         JoobleScraper(),

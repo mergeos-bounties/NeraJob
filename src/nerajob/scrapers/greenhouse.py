@@ -14,6 +14,7 @@ from __future__ import annotations
 import os
 from typing import Any
 
+from nerajob.models import JobPosting
 from nerajob.scrapers.base import BaseScraper, JobResult
 
 GREENHOUSE_API_BASE = "https://boards-api.greenhouse.io/v1/boards"
@@ -134,6 +135,57 @@ class GreenhouseScraper(BaseScraper):
     # ------------------------------------------------------------------
     # Offline fallback
     # ------------------------------------------------------------------
+
+
+    # ------------------------------------------------------------------
+    # Search (bounty #11)
+    # ------------------------------------------------------------------
+
+    def search(self, query: str, location: str = "", limit: int = 20) -> list[JobPosting]:
+        """Search Greenhouse for jobs matching query."""
+        results: list[JobPosting] = []
+        try:
+            if self.board_token:
+                jobs_data = self.fetch(self.board_token)
+                for job in jobs_data:
+                    title = (job.get("title") or "").lower()
+                    loc = (job.get("location", {}).get("name") or "").lower()
+                    q = query.lower()
+                    if q and q not in title:
+                        continue
+                    if location and location.lower() not in loc:
+                        continue
+                    results.append(JobPosting(
+                        id=f"greenhouse-{job.get('id','?')}",
+                        source=self.name,
+                        title=job.get("title", "Unknown"),
+                        company=self.company or "Unknown",
+                        location=job.get("location", {}).get("name", ""),
+                        url=job.get("absolute_url", ""),
+                        description=job.get("content", "")[:500],
+                        tags=[job.get("department", "General")],
+                        remote="remote" in loc,
+                    ))
+                    if len(results) >= limit:
+                        break
+        except Exception:
+            pass
+        
+        if not results:
+            # offline fallback
+            for jr in self._offline_sample(query):
+                results.append(JobPosting(
+                    id=jr.source,
+                    source=self.name,
+                    title=jr.title,
+                    company=jr.company,
+                    location=jr.location,
+                    url=jr.url,
+                    description=jr.description,
+                    tags=jr.tags,
+                    remote="remote" in jr.location.lower(),
+                ))
+        return results
 
     @staticmethod
     def _offline_sample(query: str) -> list[JobResult]:
