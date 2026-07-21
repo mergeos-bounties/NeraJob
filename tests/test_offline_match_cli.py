@@ -68,6 +68,32 @@ def test_offline_match_with_files(tmp_path: Path) -> None:
     assert "TestCo" in result.stdout
 
 
+def test_top_level_offline_match_with_sample_fixtures() -> None:
+    root = Path(__file__).parent.parent
+    result = sp.run(
+        [
+            "python",
+            "-m",
+            "nerajob",
+            "match",
+            "--resume-file",
+            str(root / "data" / "samples" / "resume_match_demo.json"),
+            "--jobs-file",
+            str(root / "data" / "samples" / "jobs_match_demo.json"),
+            "--top",
+            "2",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=root,
+    )
+    assert result.returncode == 0
+    assert "Offline match: 3 jobs x 4 skills" in result.stdout
+    assert "Senior Python" in result.stdout
+    assert "Backend Engineer" in result.stdout
+    assert "Frontend Product Engineer" not in result.stdout
+
+
 def test_offline_match_python_profile_vs_frontend_jobs():
     profile = Profile(
         headline="Python Backend Engineer",
