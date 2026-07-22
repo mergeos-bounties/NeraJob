@@ -1,3 +1,4 @@
+from nerajob.profile import save_profile, load_profile, list_profiles
 from __future__ import annotations
 from pathlib import Path
 
@@ -529,6 +530,39 @@ def app_status(
 
 
 @app_app.command("stats")
+@app.command("configure")
+def configure_cmd(
+    name: str = typer.Option("default", "--name", "-n", help="Profile name"),
+    remote_only: bool = typer.Option(False, "--remote-only", help="Only show remote jobs"),
+    skills: str = typer.Option("", "--skills", "-s", help="Comma-separated skill filters"),
+) -> None:
+    from nerajob.profile import save_profile, list_profiles
+
+    skill_list = [s.strip() for s in skills.split(",") if s.strip()] if skills else []
+    save_profile(name, remote_only=remote_only, skills=skill_list)
+    console.print(f"[green]Profile '{name}' saved[/green]")
+    console.print(f"  remote_only: {remote_only}")
+    if skill_list:
+        console.print(f"  skills: {', '.join(skill_list)}")
+
+
+@app.command("profiles")
+def profiles_cmd() -> None:
+    from nerajob.profile import list_profiles
+
+    profiles = list_profiles()
+    if not profiles:
+        console.print("[yellow]No profiles saved[/yellow]")
+        return
+    table = Table(title="Saved profiles")
+    table.add_column("Name")
+    table.add_column("Remote Only")
+    table.add_column("Skills")
+    for p in profiles:
+        skills = ", ".join(p.get("skills", [])) or "-"
+        table.add_row(p.get("_name", "?"), str(p.get("remote_only", False)), skills)
+    console.print(table)
+
 def app_stats() -> None:
     """Show summary of application statuses."""
     packages = load_applications()
