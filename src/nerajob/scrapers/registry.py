@@ -16,6 +16,7 @@ from nerajob.scrapers.remotive import RemotiveScraper
 from nerajob.scrapers.sample import SampleScraper
 from nerajob.scrapers.smartrecruiters import SmartRecruitersScraper
 from nerajob.scrapers.themuse import TheMuseScraper
+from nerajob.scrapers.topcv import TopcvScraper
 from nerajob.scrapers.weworkremotely import WeWorkRemotelyScraper
 
 
@@ -40,6 +41,8 @@ def available_scrapers() -> dict[str, BaseScraper]:
             Without credentials, returns deterministic offline fixtures.
             Set NERAJOB_ADZUNA_OFFLINE=1 to force offline even with credentials.
     Himalayas: live public API; set NERAJOB_HIMALAYAS_OFFLINE=1 to force offline samples.
+    TopCV (Vietnam): public job listings; set NERAJOB_TOPCV_OFFLINE=1 to force offline samples.
+      ToS: scraping TopCV.vn is subject to their Terms of Service; use offline mode in production.
     """
     scrapers: list[BaseScraper] = [
         SampleScraper(),
@@ -56,6 +59,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
         FindworkScraper(),
         HimalayasScraper(),
         AdzunaScraper(),
+        TopcvScraper(),
     ]
     return {s.name: s for s in scrapers}
 
