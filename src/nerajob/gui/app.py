@@ -7,13 +7,12 @@ import sys
 
 def main(argv: list[str] | None = None) -> int:
     try:
+        from PySide6.QtGui import QFont
         from PySide6.QtWidgets import QApplication
     except ImportError:
         print("Install GUI extras: pip install -e \".[gui]\"  (needs PySide6)", file=sys.stderr)
         return 1
     from nerajob.gui.main_window import MainWindow
-
-    from PySide6.QtGui import QFont
 
     app = QApplication(sys.argv if argv is None else argv)
     app.setApplicationName("NeraJob")
