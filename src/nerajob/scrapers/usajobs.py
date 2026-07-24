@@ -208,7 +208,7 @@ class USAJobsScraper(BaseScraper):
             if min_sal or max_sal:
                 lo = f"${float(min_sal):,.0f}" if min_sal else ""
                 hi = f"${float(max_sal):,.0f}" if max_sal else ""
-                salary_str = f"{lo}鈥搟hi}{interval_label}" if lo and hi else (lo or hi)
+                salary_str = f"{lo} - {hi}{interval_label}" if lo and hi else (lo or hi)
 
         # Description (from FormattedDescription or UserArea.JobSummary)
         desc = ""
