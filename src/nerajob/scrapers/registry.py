@@ -7,6 +7,7 @@ from nerajob.scrapers.arbeitnow import ArbeitnowScraper
 from nerajob.scrapers.ashby import AshbyScraper
 from nerajob.scrapers.base import BaseScraper
 from nerajob.scrapers.findwork import FindworkScraper
+from nerajob.scrapers.himalayas import HimalayasScraper
 from nerajob.scrapers.jobicy import JobicyScraper
 from nerajob.scrapers.jooble import JoobleScraper
 from nerajob.scrapers.lever import LeverScraper
@@ -15,6 +16,7 @@ from nerajob.scrapers.remotive import RemotiveScraper
 from nerajob.scrapers.sample import SampleScraper
 from nerajob.scrapers.smartrecruiters import SmartRecruitersScraper
 from nerajob.scrapers.themuse import TheMuseScraper
+from nerajob.scrapers.usajobs import USAJobsScraper
 from nerajob.scrapers.weworkremotely import WeWorkRemotelyScraper
 
 
@@ -29,6 +31,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
 
     Remotive: live public API; set NERAJOB_REMOTIVE_OFFLINE=1 to force offline samples.
     Arbeitnow: live public API; set NERAJOB_ARBEITNOW_OFFLINE=1 for offline samples.
+    Himalayas: live public API; set NERAJOB_HIMALAYAS_OFFLINE=1 for offline samples.
     Jobicy: live public API; set NERAJOB_JOBICY_OFFLINE=1 for offline samples.
     We Work Remotely: RSS feed; set NERAJOB_WWR_OFFLINE=1 for offline samples.
     Smart Recruiters: set NERAJOB_SMARTRECRUITERS_COMPANIES to comma-separated company IDs.
@@ -37,13 +40,16 @@ def available_scrapers() -> dict[str, BaseScraper]:
               Set NERAJOB_FINDWORK_OFFLINE=1 to force offline even with token.
     Adzuna: live public API; set ADZUNA_APP_ID + ADZUNA_APP_KEY env vars.
             Without credentials, returns deterministic offline fixtures.
-            Set NERAJOB_ADZUNA_OFFLINE=1 to force offline even with credentials.
+            Set ADZUNA_OFFLINE=1 to force offline even with credentials.
+    USAJOBS: live public API; set USAJOBS_API_KEY + USAJOBS_EMAIL env vars.
+             Without credentials, returns deterministic offline fixtures.
     """
     scrapers: list[BaseScraper] = [
         SampleScraper(),
         RemoteOKScraper(),
         RemotiveScraper(),
         ArbeitnowScraper(),
+        HimalayasScraper(),
         JobicyScraper(),
         JoobleScraper(),
         TheMuseScraper(),
@@ -53,6 +59,7 @@ def available_scrapers() -> dict[str, BaseScraper]:
         SmartRecruitersScraper(),
         FindworkScraper(),
         AdzunaScraper(),
+        USAJobsScraper(),
     ]
     return {s.name: s for s in scrapers}
 
