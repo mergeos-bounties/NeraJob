@@ -10,14 +10,12 @@ from nerajob.scrapers.findwork import FindworkScraper
 from nerajob.scrapers.himalayas import HimalayasScraper
 from nerajob.scrapers.jobicy import JobicyScraper
 from nerajob.scrapers.jooble import JoobleScraper
-from nerajob.scrapers.lever import LeverScraper
 from nerajob.scrapers.remoteok import RemoteOKScraper
 from nerajob.scrapers.remotive import RemotiveScraper
 from nerajob.scrapers.sample import SampleScraper
 from nerajob.scrapers.smartrecruiters import SmartRecruitersScraper
 from nerajob.scrapers.themuse import TheMuseScraper
 from nerajob.scrapers.usajobs import USAJobsScraper
-from nerajob.scrapers.weworkremotely import WeWorkRemotelyScraper
 
 
 def available_scrapers() -> dict[str, BaseScraper]:
@@ -53,8 +51,6 @@ def available_scrapers() -> dict[str, BaseScraper]:
         JobicyScraper(),
         JoobleScraper(),
         TheMuseScraper(),
-        WeWorkRemotelyScraper(),
-        LeverScraper(board_name=os.getenv("NERAJOB_LEVER_BOARD") or None),
         AshbyScraper(board_id=os.getenv("NERAJOB_ASHBY_BOARD") or None),
         SmartRecruitersScraper(),
         FindworkScraper(),
